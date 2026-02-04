@@ -45,10 +45,10 @@ body {
 /* Toolbar */
 .toolbar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 0 24px;
-  height: 48px;
+  padding: 0 20px;
+  height: 56px;
   background: linear-gradient(
     135deg,
     var(--bg-secondary) 0%,
@@ -57,8 +57,7 @@ body {
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
-  gap: 24px;
-  position: relative;
+  gap: 16px;
 }
 
 /* Brand Section */
@@ -66,10 +65,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  position: absolute;
-  left: 24px;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
 }
 
 .brand-logo {
@@ -94,13 +90,15 @@ body {
 .brand-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  justify-content: center;
+  gap: 1px;
 }
 
 .brand-info h1 {
   font-size: 1rem;
   font-weight: 700;
   margin: 0;
+  line-height: 1.2;
   letter-spacing: -0.3px;
   background: linear-gradient(
     135deg,
@@ -116,6 +114,7 @@ body {
   font-size: 0.7rem;
   color: var(--text-muted);
   font-weight: 500;
+  line-height: 1.2;
   max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
@@ -136,29 +135,29 @@ body {
   align-items: center;
   gap: 4px;
   background-color: var(--bg-primary);
-  padding: 5px;
+  padding: 4px 6px;
   border-radius: 10px;
   border: 1px solid var(--border-color);
-  height: 42px;
 }
 
 .toolbar-separator {
   width: 1px;
-  height: 28px;
+  height: 24px;
   background: linear-gradient(
     180deg,
     transparent,
     var(--border-color),
     transparent
   );
-  margin: 0 8px;
+  margin: 0 4px;
 }
 
 .btn-toolbar {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   border: none;
   border-radius: 8px;
   background: transparent;
@@ -167,7 +166,7 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  height: 32px;
+  white-space: nowrap;
 }
 
 .btn-toolbar:hover {
@@ -181,6 +180,7 @@ body {
 }
 
 .btn-toolbar svg {
+  flex-shrink: 0;
   opacity: 0.7;
   transition: opacity 0.2s ease;
 }
@@ -197,18 +197,15 @@ body {
 .toolbar-status {
   display: flex;
   align-items: center;
-  gap: 12px;
-  position: absolute;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .save-indicator {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -245,8 +242,8 @@ body {
 }
 
 .btn-icon-only {
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -273,8 +270,8 @@ body {
 
 .theme-icon {
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .theme-icon.hidden {
@@ -1082,7 +1079,22 @@ body {
 
 .connection-line.selected {
   stroke: #00d9ff !important;
-  stroke-width: 4;
+  stroke-width: 5;
+  filter: drop-shadow(0 0 6px #00d9ff)
+    drop-shadow(0 0 12px rgba(0, 217, 255, 0.5));
+  animation: connection-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes connection-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px #00d9ff)
+      drop-shadow(0 0 12px rgba(0, 217, 255, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px #00d9ff)
+      drop-shadow(0 0 20px rgba(0, 217, 255, 0.7));
+  }
 }
 
 .connection-line.item-connection {
@@ -1095,11 +1107,11 @@ body {
 }
 
 .connection-hit-area {
-  stroke: transparent;
-  stroke-width: 15;
+  stroke: rgba(255, 255, 255, 0.001);
+  stroke-width: 20;
   fill: none;
   cursor: pointer;
-  pointer-events: stroke;
+  pointer-events: all !important;
 }
 
 .item-connections-group {
@@ -1111,35 +1123,69 @@ body {
 }
 
 .waypoint-handle {
-  transition: transform 0.15s;
+  transition:
+    transform 0.15s,
+    filter 0.15s;
   transform-origin: center;
   transform-box: fill-box;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  cursor: grab !important;
 }
 
 .waypoint-handle:hover {
   transform: scale(1.2);
+  filter: drop-shadow(0 0 8px #00d9ff) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.waypoint-handle:active {
+  cursor: grabbing !important;
+  transform: scale(1.1);
 }
 
 .endpoint-handle {
   transition:
     transform 0.15s,
-    opacity 0.15s;
+    filter 0.15s;
   transform-origin: center;
   transform-box: fill-box;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  cursor: grab !important;
 }
 
 .endpoint-handle:hover {
-  transform: scale(1.15);
+  transform: scale(1.2);
+}
+
+.endpoint-handle:active {
+  cursor: grabbing !important;
+  transform: scale(1.1);
+}
+
+.endpoint-from {
+  fill: #4caf50 !important;
+}
+
+.endpoint-from:hover {
+  filter: drop-shadow(0 0 8px #4caf50) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.endpoint-to {
+  fill: #f44336 !important;
+}
+
+.endpoint-to:hover {
+  filter: drop-shadow(0 0 8px #f44336) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
 }
 
 .add-waypoint-btn {
   transition: transform 0.15s;
   transform-origin: center;
   transform-box: fill-box;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .add-waypoint-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .connection-arrow {
@@ -1173,7 +1219,11 @@ body {
   min-width: 150px;
 }
 
-.connection-context-menu button {
+.connection-context-menu.hidden {
+  display: none;
+}
+
+.connection-context-menu .ctx-item {
   display: block;
   width: 100%;
   padding: 10px 16px;
@@ -1186,8 +1236,117 @@ body {
   transition: background 0.15s;
 }
 
-.connection-context-menu button:hover {
+.connection-context-menu .ctx-item:hover {
   background: var(--bg-tertiary);
+}
+
+.connection-context-menu .ctx-item.ctx-danger {
+  color: var(--danger);
+}
+
+.connection-context-menu .ctx-item.ctx-danger:hover {
+  background: rgba(231, 76, 60, 0.15);
+}
+
+/* Canvas Text */
+.canvas-text {
+  position: absolute;
+  min-width: 50px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px dashed transparent;
+  border-radius: 4px;
+  cursor: move;
+  outline: none;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  z-index: 10;
+}
+
+.canvas-text:hover {
+  border-color: var(--accent-primary);
+  background: rgba(108, 92, 231, 0.1);
+}
+
+.canvas-text.selected {
+  border-color: var(--accent-primary);
+  background: rgba(108, 92, 231, 0.15);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
+}
+
+.canvas-text[contenteditable="true"]:focus {
+  cursor: text;
+  user-select: text;
+  border-style: solid;
+}
+
+/* Text resize handle for font size */
+.text-resize-handle {
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  cursor: ns-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: auto;
+}
+
+.canvas-text:hover .text-resize-handle,
+.canvas-text.selected .text-resize-handle {
+  opacity: 1;
+}
+/* Canvas Column - Solid color divisor */
+.canvas-column {
+  position: absolute;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 8px;
+  cursor: move;
+  border: 3px dashed transparent;
+  opacity: 0.85;
+  z-index: 1;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    opacity 0.2s;
+}
+
+.canvas-column:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  opacity: 0.95;
+}
+
+.canvas-column.selected {
+  border-color: #fff;
+  border-style: solid;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+  opacity: 1;
+}
+
+.column-resize-handle {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.canvas-column:hover .column-resize-handle,
+.canvas-column.selected .column-resize-handle {
+  opacity: 1;
 }
 
 /* Scrollbar */
@@ -1678,47 +1837,4 @@ body {
   border-style: solid;
   background: rgba(108, 92, 231, 0.2);
   box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.4);
-}
-
-/* ==========================================
-   Canvas Column (Divisórias/Colunas)
-   ========================================== */
-
-.canvas-column {
-  position: absolute;
-  border-radius: 8px;
-  cursor: move;
-  border: 2px dashed transparent;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
-  z-index: 0;
-}
-
-.canvas-column:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.canvas-column.selected {
-  border-color: var(--accent-primary);
-  border-style: solid;
-  box-shadow: 0 0 0 3px var(--accent-primary);
-}
-
-.canvas-column .column-resize-handle {
-  position: absolute;
-  right: -6px;
-  bottom: -6px;
-  width: 14px;
-  height: 14px;
-  background: var(--accent-primary);
-  border-radius: 50%;
-  cursor: nwse-resize;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.canvas-column:hover .column-resize-handle,
-.canvas-column.selected .column-resize-handle {
-  opacity: 1;
 }

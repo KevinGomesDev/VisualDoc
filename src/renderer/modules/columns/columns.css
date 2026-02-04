@@ -1,0 +1,50 @@
+/* ==========================================
+   Canvas Columns (Divisores/Áreas)
+   ========================================== */
+
+.canvas-column {
+  position: absolute;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 8px;
+  cursor: move;
+  border: 3px dashed transparent;
+  opacity: 0.85;
+  z-index: 1;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    opacity 0.2s;
+}
+
+.canvas-column:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  opacity: 0.95;
+}
+
+.canvas-column.selected {
+  border-color: #fff;
+  border-style: solid;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+  opacity: 1;
+}
+
+/* Column Resize Handle */
+.column-resize-handle {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.canvas-column:hover .column-resize-handle,
+.canvas-column.selected .column-resize-handle {
+  opacity: 1;
+}

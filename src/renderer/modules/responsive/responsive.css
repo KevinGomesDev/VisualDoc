@@ -1,0 +1,241 @@
+/* ==========================================
+   Mobile Responsive Styles
+   ========================================== */
+
+/* Safe area for notched devices */
+@supports (padding: env(safe-area-inset-top)) {
+  .toolbar {
+    padding-top: calc(12px + env(safe-area-inset-top));
+    padding-left: calc(20px + env(safe-area-inset-left));
+    padding-right: calc(20px + env(safe-area-inset-right));
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+    height: auto;
+  }
+
+  .toolbar-brand {
+    min-width: auto;
+  }
+
+  .brand-info h1 {
+    font-size: 1rem;
+  }
+
+  .project-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-group {
+    gap: 2px;
+    padding: 2px;
+  }
+
+  .btn-toolbar {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .btn-label {
+    display: none;
+  }
+
+  .toolbar-separator {
+    display: none;
+  }
+
+  .toolbar-status {
+    min-width: auto;
+  }
+
+  /* Cards */
+  .card {
+    min-width: 200px !important;
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 95% !important;
+    max-width: 95% !important;
+    max-height: 90vh;
+    margin: 5vh auto;
+  }
+
+  .modal-body {
+    max-height: 60vh;
+  }
+
+  /* Context menu */
+  .context-menu {
+    min-width: 180px;
+  }
+
+  .context-menu button {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+
+  /* Checklist items - larger touch targets */
+  .card-checklist-item {
+    padding: 10px 8px;
+    min-height: 44px;
+  }
+
+  .card-checklist-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Form inputs - larger for touch */
+  input[type="text"],
+  input[type="color"],
+  select,
+  textarea {
+    min-height: 44px;
+    font-size: 16px !important; /* Prevents iOS zoom */
+  }
+
+  /* Buttons - larger touch targets */
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Checklist drag handle - larger for mobile */
+  .checklist-drag-handle {
+    padding: 8px 12px;
+    font-size: 1.3rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .toolbar-brand {
+    flex: 1;
+  }
+
+  .brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-info h1 {
+    font-size: 0.9rem;
+  }
+
+  .action-group {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .btn-toolbar {
+    padding: 6px 8px;
+    font-size: 0.7rem;
+    width: 100%;
+  }
+
+  .save-indicator {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  .btn-icon-only {
+    width: 32px;
+    height: 32px;
+  }
+
+  .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .modal-body {
+    max-height: calc(100vh - 140px);
+  }
+
+  .checklist-item-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .checklist-name {
+    min-width: 100%;
+    order: -1;
+  }
+
+  .checklist-category-select {
+    flex: 1;
+  }
+}
+
+/* Touch-specific styles */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .btn,
+  .card,
+  .card-checklist-item,
+  .checklist-item,
+  .category-button {
+    cursor: default;
+  }
+
+  /* Disable hover effects that don't work well on touch */
+  .card:hover {
+    transform: none;
+  }
+
+  /* Hide tooltips on touch - use long press instead */
+  .checklist-tooltip {
+    display: none !important;
+  }
+
+  /* Resize handle - larger for touch */
+  .card-resize-handle {
+    width: 24px;
+    height: 24px;
+    bottom: -6px;
+    right: -6px;
+  }
+
+  /* Card connector - larger for touch */
+  .card-connector,
+  .checklist-connector {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+  }
+}
+
+/* Landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .toolbar {
+    padding: 6px 12px;
+  }
+
+  .toolbar .btn {
+    padding: 6px 10px;
+  }
+
+  .modal-content {
+    max-height: 95vh;
+  }
+
+  .modal-body {
+    max-height: 50vh;
+  }
+}

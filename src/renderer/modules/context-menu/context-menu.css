@@ -1,0 +1,34 @@
+/* ==========================================
+   Context Menu Styles
+   ========================================== */
+
+.context-menu {
+  position: fixed;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 0;
+  min-width: 180px;
+  z-index: 2000;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.context-menu.hidden {
+  display: none;
+}
+
+.context-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.context-menu button:hover {
+  background-color: var(--bg-tertiary);
+}

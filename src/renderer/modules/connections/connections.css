@@ -1,0 +1,212 @@
+/* ==========================================
+   Connection Lines & Controls
+   ========================================== */
+
+/* Connection Lines */
+.connection-line {
+  stroke: var(--accent-primary);
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  transition:
+    stroke 0.2s,
+    stroke-width 0.2s;
+}
+
+.connection-line.selected {
+  stroke: #00d9ff !important;
+  stroke-width: 5;
+  filter: drop-shadow(0 0 6px #00d9ff)
+    drop-shadow(0 0 12px rgba(0, 217, 255, 0.5));
+  animation: connection-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes connection-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px #00d9ff)
+      drop-shadow(0 0 12px rgba(0, 217, 255, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px #00d9ff)
+      drop-shadow(0 0 20px rgba(0, 217, 255, 0.7));
+  }
+}
+
+.connection-line.item-connection {
+  stroke-width: 2;
+  stroke-dasharray: none;
+}
+
+.connection-line.item-connection.selected {
+  stroke-width: 3;
+}
+
+.connection-hit-area {
+  stroke: rgba(255, 255, 255, 0.001);
+  stroke-width: 20;
+  fill: none;
+  cursor: pointer;
+  pointer-events: all !important;
+}
+
+.item-connections-group {
+  /* Linhas de item ficam por cima das linhas de card */
+}
+
+.connection-controls-group {
+  pointer-events: all;
+}
+
+/* Waypoint Handle */
+.waypoint-handle {
+  transition:
+    transform 0.15s,
+    filter 0.15s;
+  transform-origin: center;
+  transform-box: fill-box;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  cursor: grab !important;
+}
+
+.waypoint-handle:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 8px #00d9ff) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.waypoint-handle:active {
+  cursor: grabbing !important;
+  transform: scale(1.1);
+}
+
+/* Endpoint Handle */
+.endpoint-handle {
+  transition:
+    transform 0.15s,
+    filter 0.15s;
+  transform-origin: center;
+  transform-box: fill-box;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  cursor: grab !important;
+}
+
+.endpoint-handle:hover {
+  transform: scale(1.2);
+}
+
+.endpoint-handle:active {
+  cursor: grabbing !important;
+  transform: scale(1.1);
+}
+
+.endpoint-from {
+  fill: #4caf50 !important;
+}
+
+.endpoint-from:hover {
+  filter: drop-shadow(0 0 8px #4caf50) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.endpoint-to {
+  fill: #f44336 !important;
+}
+
+.endpoint-to:hover {
+  filter: drop-shadow(0 0 8px #f44336) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* Add Waypoint Button */
+.add-waypoint-btn {
+  transition: transform 0.15s;
+  transform-origin: center;
+  transform-box: fill-box;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.add-waypoint-btn:hover {
+  transform: scale(1.2);
+}
+
+/* Connection Arrow */
+.connection-arrow {
+  fill: var(--accent-primary);
+}
+
+/* Temporary Connection Line (during drag) */
+.temp-connection-line {
+  stroke: #00d9ff;
+  stroke-width: 3;
+  stroke-dasharray: 8, 4;
+  pointer-events: none;
+  animation: dash-animation 0.5s linear infinite;
+}
+
+@keyframes dash-animation {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
+
+/* Connection Context Menu */
+.connection-context-menu {
+  position: fixed;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  overflow: hidden;
+  min-width: 150px;
+}
+
+.connection-context-menu.hidden {
+  display: none;
+}
+
+.connection-context-menu .ctx-item {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+
+.connection-context-menu .ctx-item:hover {
+  background: var(--bg-tertiary);
+}
+
+.connection-context-menu .ctx-item.ctx-danger {
+  color: var(--danger);
+}
+
+.connection-context-menu .ctx-item.ctx-danger:hover {
+  background: rgba(231, 76, 60, 0.15);
+}
+
+/* ==========================================
+   Connections Layer
+   ========================================== */
+
+#connections-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10000px;
+  height: 10000px;
+  pointer-events: none;
+  z-index: 10;
+  transform-origin: 0 0;
+  overflow: visible;
+}
+
+#connections-layer .connection-hit-area,
+#connections-layer .waypoint-handle,
+#connections-layer .endpoint-handle,
+#connections-layer .add-waypoint-btn {
+  pointer-events: all;
+}

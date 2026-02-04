@@ -1,0 +1,74 @@
+/* ==========================================
+   Canvas Text (Títulos/Anotações)
+   ========================================== */
+
+.canvas-text {
+  position: absolute;
+  min-width: 30px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: move;
+  outline: none;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    box-shadow 0.2s;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  z-index: 5; /* Acima das colunas (z-index: 0) mas abaixo dos cards */
+  user-select: none;
+}
+
+.canvas-text:hover {
+  border-color: var(--accent-primary);
+  background: rgba(108, 92, 231, 0.15);
+}
+
+.canvas-text:focus {
+  cursor: text;
+  border-color: var(--accent-primary);
+  border-width: 2px;
+  background: rgba(108, 92, 231, 0.2);
+}
+
+.canvas-text[contenteditable="true"]:focus {
+  cursor: text;
+  user-select: text;
+  border-style: solid;
+}
+
+.canvas-text.selected {
+  border-color: var(--accent-primary);
+  border-width: 2px;
+  border-style: solid;
+  background: rgba(108, 92, 231, 0.2);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.4);
+}
+
+/* Text Resize Handle */
+.text-resize-handle {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-primary);
+  border: 2px solid var(--bg-secondary);
+  border-radius: 50%;
+  cursor: ns-resize;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.canvas-text:hover .text-resize-handle,
+.canvas-text:focus .text-resize-handle,
+.canvas-text.selected .text-resize-handle {
+  opacity: 1;
+}

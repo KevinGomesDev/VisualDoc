@@ -1,0 +1,21 @@
+/* ==========================================
+   Canvas Container
+   ========================================== */
+
+#canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(
+    circle,
+    var(--bg-tertiary) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+  cursor: grab;
+}
+
+#canvas-container:active {
+  cursor: grabbing;
+}

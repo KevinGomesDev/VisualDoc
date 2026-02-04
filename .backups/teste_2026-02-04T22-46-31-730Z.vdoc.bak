@@ -1,0 +1,210 @@
+{
+  "cards": [
+    {
+      "id": "card_1770240862791_l7uy0qlxm",
+      "title": "Sei lá",
+      "categoryIds": [
+        1,
+        4,
+        3,
+        2
+      ],
+      "categoryId": 1,
+      "category": "Geral",
+      "details": "Teste",
+      "color": "#6c5ce7",
+      "x": 726.5714285714286,
+      "y": 124.07142857142864,
+      "checklists": [
+        {
+          "id": "card_1770241858884_hwer2n0qs",
+          "name": "Teste",
+          "details": "",
+          "completed": false,
+          "categoryId": "1"
+        },
+        {
+          "id": "card_1770245057888_vcn5yxmkm",
+          "name": "Teste 2",
+          "details": "",
+          "completed": false,
+          "categoryId": "2"
+        }
+      ],
+      "width": 450,
+      "height": 220
+    },
+    {
+      "id": "card_1770242668663_gd93drc4k",
+      "title": "Novo Card",
+      "categoryIds": [
+        1
+      ],
+      "categoryId": 1,
+      "category": "Geral",
+      "details": "",
+      "color": "#6c5ce7",
+      "x": 541,
+      "y": -248.03571428571422,
+      "checklists": [
+        {
+          "id": "card_1770242668663_uu938ugjt",
+          "name": "Teste",
+          "details": "",
+          "completed": false,
+          "categoryId": "3"
+        }
+      ],
+      "width": 218,
+      "height": 100
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn_1770243954111_lrno08ens",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": null,
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": null,
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770244061901_1hv5alz9q",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": null,
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": null,
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770244073429_yi0yfhv1c",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": null,
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": null,
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770244137300_d4dln721g",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": null,
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": null,
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770244197539_5r8854hl3",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": null,
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": null,
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770244235260_bctdz4zjm",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": null,
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": null,
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770244295576_8xdfxqx3p",
+      "from": "card_1770240862791_l7uy0qlxm",
+      "to": "card_1770242668663_gd93drc4k",
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": "card_1770242668663_gd93drc4k",
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null,
+      "fixedToSide": "bottom",
+      "fixedFromSide": null
+    },
+    {
+      "id": "conn_1770244822729_6z61lt98r",
+      "from": "card_1770240862791_l7uy0qlxm:card_1770245057888_vcn5yxmkm",
+      "to": "card_1770242668663_gd93drc4k:card_1770242668663_uu938ugjt",
+      "fromCardId": "card_1770240862791_l7uy0qlxm",
+      "toCardId": "card_1770242668663_gd93drc4k",
+      "fromChecklistId": "card_1770245057888_vcn5yxmkm",
+      "toChecklistId": "card_1770242668663_uu938ugjt",
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null,
+      "fixedToSide": "left",
+      "fixedFromSide": "right"
+    }
+  ],
+  "texts": [
+    {
+      "id": "card_1770241467923_021snhk2t",
+      "content": "Novo Texto",
+      "x": 129.77777777777771,
+      "y": -522.7777777777778,
+      "fontSize": 10,
+      "color": "#ffffff",
+      "width": 200
+    }
+  ],
+  "columns": [
+    {
+      "id": "card_1770241473148_vxytgjvau",
+      "title": "Nova Coluna",
+      "x": 862.6984126984125,
+      "y": -771.8253968253969,
+      "width": 100,
+      "height": 404,
+      "color": "#6c5ce7"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Geral",
+      "color": "#6c5ce7"
+    },
+    {
+      "id": 2,
+      "name": "Importante",
+      "color": "#e74c3c"
+    },
+    {
+      "id": 3,
+      "name": "Em Progresso",
+      "color": "#f39c12"
+    },
+    {
+      "id": 4,
+      "name": "Concluído",
+      "color": "#27ae60"
+    }
+  ],
+  "projectName": "teste",
+  "lastModified": "2026-02-04T22:46:26.867Z"
+}

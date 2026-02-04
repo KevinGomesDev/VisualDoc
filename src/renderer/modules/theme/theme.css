@@ -1,0 +1,31 @@
+/* Theme Module - Estilos de tema */
+
+/* Transição suave ao trocar temas */
+html {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Ícones de tema */
+#theme-icon-dark,
+#theme-icon-light {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+#theme-icon-dark.hidden,
+#theme-icon-light.hidden {
+  display: none;
+}
+
+/* Botão de tema */
+#btn-toggle-theme {
+  position: relative;
+  overflow: hidden;
+}
+
+#btn-toggle-theme:hover svg {
+  transform: rotate(15deg);
+}

@@ -1,0 +1,20 @@
+/* Project Module - Estilos para modais de projeto */
+
+.project-selection-modal .modal-content {
+  animation: slideIn 0.3s ease;
+}
+
+.project-selection-modal .existing-projects {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.project-selection-modal .existing-project-btn {
+  transition: all 0.2s ease;
+}
+
+.project-selection-modal .existing-project-btn:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateX(5px);
+}

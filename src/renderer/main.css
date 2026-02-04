@@ -1,0 +1,28 @@
+/* ==========================================
+   VisualDoc - Main Stylesheet
+   Imports all modular CSS files
+   ========================================== */
+
+/* Base styles, variables, reset */
+@import "./modules/base/base.css";
+
+/* Layout components */
+@import "./modules/toolbar/toolbar.css";
+@import "./modules/canvas/canvas.css";
+
+/* UI components */
+@import "./modules/cards/cards.css";
+@import "./modules/connections/connections.css";
+@import "./modules/texts/texts.css";
+@import "./modules/columns/columns.css";
+@import "./modules/categories/categories.css";
+@import "./modules/modal/modal.css";
+@import "./modules/context-menu/context-menu.css";
+
+/* Feature modules */
+@import "./modules/selection/selection.css";
+@import "./modules/project/project.css";
+@import "./modules/theme/theme.css";
+
+/* Responsive */
+@import "./modules/responsive/responsive.css";

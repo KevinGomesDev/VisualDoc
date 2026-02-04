@@ -1,0 +1,18 @@
+/* Selection Module - Estilos de seleção */
+
+/* Indicador visual de múltipla seleção */
+.card.selected,
+.canvas-text.selected,
+.canvas-column.selected {
+  box-shadow:
+    0 0 0 2px var(--primary),
+    0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Indicador de arraste */
+.card.dragging,
+.canvas-text.dragging,
+.canvas-column.dragging {
+  opacity: 0.8;
+  z-index: 1000;
+}

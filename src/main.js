@@ -39,6 +39,11 @@ function createWindow() {
 
   mainWindow.loadFile(path.join(__dirname, "renderer/index.html"));
   mainWindow.setMenuBarVisibility(false);
+
+  // Abre DevTools automaticamente em desenvolvimento
+  if (!app.isPackaged) {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 app.whenReady().then(createWindow);
