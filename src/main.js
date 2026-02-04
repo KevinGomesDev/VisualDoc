@@ -6,12 +6,18 @@ let mainWindow;
 let currentProjectName = null;
 let currentProjectPath = null;
 
-// Pasta onde o executável está rodando
+// Pasta onde os projetos são salvos
 function getAppDirectory() {
+  // Em produção, usa a pasta de dados do usuário (AppData)
   // Em desenvolvimento, usa a pasta do projeto
-  // Em produção, usa a pasta onde o exe está
   if (app.isPackaged) {
-    return path.dirname(app.getPath("exe"));
+    // Usa AppData/VisualDoc para salvar os projetos
+    const userDataPath = path.join(app.getPath("documents"), "VisualDoc");
+    // Cria a pasta se não existir
+    if (!fs.existsSync(userDataPath)) {
+      fs.mkdirSync(userDataPath, { recursive: true });
+    }
+    return userDataPath;
   }
   return process.cwd();
 }
@@ -57,8 +63,13 @@ ipcMain.handle("save-data", async (event, data) => {
     }
 
     const appDir = getAppDirectory();
+
+    // Garante que a pasta existe
+    if (!fs.existsSync(appDir)) {
+      fs.mkdirSync(appDir, { recursive: true });
+    }
+
     const projectFile = path.join(appDir, `${currentProjectName}.vdoc`);
-    const svgFile = path.join(appDir, `${currentProjectName}.svg`);
 
     // Salva o arquivo .vdoc
     fs.writeFileSync(projectFile, JSON.stringify(data, null, 2), "utf-8");
@@ -68,6 +79,7 @@ ipcMain.handle("save-data", async (event, data) => {
 
     return { success: true, projectPath: projectFile };
   } catch (error) {
+    console.error("Erro ao salvar dados:", error);
     return { success: false, error: error.message };
   }
 });
@@ -141,14 +153,46 @@ ipcMain.handle("get-app-directory", async () => {
 
 // Definir nome do projeto atual
 ipcMain.handle("set-project-name", async (event, name) => {
-  currentProjectName = name;
-  const appDir = getAppDirectory();
-  currentProjectPath = path.join(appDir, `${name}.vdoc`);
+  try {
+    currentProjectName = name;
+    const appDir = getAppDirectory();
 
-  // Atualiza título da janela
-  mainWindow.setTitle(`VisualDoc - ${name}`);
+    // Garante que a pasta existe
+    if (!fs.existsSync(appDir)) {
+      fs.mkdirSync(appDir, { recursive: true });
+    }
 
-  return { success: true, projectPath: currentProjectPath };
+    currentProjectPath = path.join(appDir, `${name}.vdoc`);
+
+    // Cria arquivo inicial se não existir
+    if (!fs.existsSync(currentProjectPath)) {
+      const initialData = {
+        cards: [],
+        connections: [],
+        categories: [
+          { id: 1, name: "Geral", color: "#6c5ce7" },
+          { id: 2, name: "Importante", color: "#e74c3c" },
+          { id: 3, name: "Em Progresso", color: "#f39c12" },
+          { id: 4, name: "Concluído", color: "#27ae60" },
+        ],
+        projectName: name,
+        lastModified: new Date().toISOString(),
+      };
+      fs.writeFileSync(
+        currentProjectPath,
+        JSON.stringify(initialData, null, 2),
+        "utf-8",
+      );
+    }
+
+    // Atualiza título da janela
+    mainWindow.setTitle(`VisualDoc - ${name}`);
+
+    return { success: true, projectPath: currentProjectPath };
+  } catch (error) {
+    console.error("Erro ao definir nome do projeto:", error);
+    return { success: false, error: error.message };
+  }
 });
 
 // Obter nome do projeto atual
