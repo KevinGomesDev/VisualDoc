@@ -389,12 +389,6 @@ class VisualDocApp {
 
         await window.electronAPI.saveData(data);
 
-        // Também salva o SVG automaticamente
-        if (this.cards.length > 0) {
-          const svgContent = this.generateSVG();
-          await window.electronAPI.saveSVG(svgContent);
-        }
-
         this.saveStatus.textContent = "✓ Salvo";
         this.saveStatus.classList.remove("saving");
       } catch (error) {
