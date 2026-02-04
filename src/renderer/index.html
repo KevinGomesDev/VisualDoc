@@ -2,7 +2,17 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#1a1a2e" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <title>VisualDoc - Documentação Visual</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -10,12 +20,12 @@
     <div id="app">
       <!-- Toolbar -->
       <div class="toolbar">
-        <div class="toolbar-left">
-          <h1>
+        <div class="toolbar-brand">
+          <div class="brand-logo">
             <svg
               class="app-logo"
-              width="24"
-              height="24"
+              width="28"
+              height="28"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -29,40 +39,169 @@
               <polyline points="14 2 14 8 20 8" />
               <path d="m9 15 2 2 4-4" />
             </svg>
-            VisualDoc
-          </h1>
-          <button id="btn-new-project" class="btn btn-secondary">
-            📄 Novo Projeto
-          </button>
-          <button id="btn-load-project" class="btn btn-secondary">
-            📂 Carregar
-          </button>
-          <button id="btn-save-project" class="btn btn-secondary">
-            💾 Salvar Como
-          </button>
-          <div class="toolbar-divider"></div>
-          <button id="btn-add-card" class="btn btn-primary">
-            <span>+</span> Novo Card
-          </button>
-          <button id="btn-categories" class="btn btn-secondary">
-            🏷️ Categorias
-          </button>
-          <button id="btn-export" class="btn btn-secondary">
-            📤 Exportar SVG
-          </button>
+          </div>
+          <div class="brand-info">
+            <h1>VisualDoc</h1>
+            <span id="project-name-display" class="project-subtitle"
+              >Sem projeto</span
+            >
+          </div>
         </div>
-        <div class="toolbar-right">
-          <span id="save-status" class="save-status">✓ Salvo</span>
+
+        <div class="toolbar-actions">
+          <div class="action-group">
+            <button
+              id="btn-new-project"
+              class="btn btn-toolbar"
+              title="Novo Projeto"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="12" y1="18" x2="12" y2="12" />
+                <line x1="9" y1="15" x2="15" y2="15" />
+              </svg>
+              <span class="btn-label">Novo</span>
+            </button>
+            <button
+              id="btn-load-project"
+              class="btn btn-toolbar"
+              title="Carregar Projeto"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"
+                />
+                <polyline points="12 13 12 17" />
+                <polyline points="9 14 12 17 15 14" />
+              </svg>
+              <span class="btn-label">Abrir</span>
+            </button>
+            <button
+              id="btn-save-project"
+              class="btn btn-toolbar"
+              title="Salvar Como"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"
+                />
+                <polyline points="17 21 17 13 7 13 7 21" />
+                <polyline points="7 3 7 8 15 8" />
+              </svg>
+              <span class="btn-label">Salvar</span>
+            </button>
+          </div>
+
+          <div class="toolbar-separator"></div>
+
+          <div class="action-group">
+            <button
+              id="btn-categories"
+              class="btn btn-toolbar"
+              title="Gerenciar Categorias"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"
+                />
+                <line x1="7" y1="7" x2="7.01" y2="7" />
+              </svg>
+              <span class="btn-label">Categorias</span>
+            </button>
+            <button
+              id="btn-export"
+              class="btn btn-toolbar"
+              title="Exportar como Texto"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10 9 9 9 8 9" />
+              </svg>
+              <span class="btn-label">Exportar</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="toolbar-status">
+          <div id="save-status" class="save-indicator saved">
+            <svg
+              class="save-icon"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="save-text">Salvo</span>
+          </div>
           <button
             id="btn-toggle-theme"
-            class="btn btn-icon"
+            class="btn btn-icon-only"
             title="Alternar tema"
           >
             <svg
               id="theme-icon-dark"
               class="theme-icon"
-              width="18"
-              height="18"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -75,8 +214,8 @@
             <svg
               id="theme-icon-light"
               class="theme-icon hidden"
-              width="18"
-              height="18"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -89,6 +228,12 @@
               <path d="M12 20v2" />
               <path d="m4.93 4.93 1.41 1.41" />
               <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          </button>
               <path d="M2 12h2" />
               <path d="M20 12h2" />
               <path d="m6.34 17.66-1.41 1.41" />
@@ -143,7 +288,6 @@
             <button id="btn-delete-card" class="btn btn-danger">
               Excluir Card
             </button>
-            <button id="btn-save-card" class="btn btn-primary">Salvar</button>
           </div>
         </div>
       </div>
@@ -183,15 +327,38 @@
         </div>
       </div>
 
-      <!-- Context Menu para conexões -->
+      <!-- Context Menu para cards -->
       <div id="context-menu" class="context-menu hidden">
         <button id="ctx-connect">🔗 Conectar a...</button>
         <button id="ctx-disconnect">❌ Remover conexões</button>
         <button id="ctx-edit">✏️ Editar</button>
         <button id="ctx-delete">🗑️ Excluir</button>
       </div>
+
+      <!-- Context Menu para área vazia -->
+      <div id="canvas-context-menu" class="context-menu hidden">
+        <button id="ctx-new-card">📋 Novo Card</button>
+        <button id="ctx-new-text">📝 Novo Texto</button>
+        <button id="ctx-new-column">🔲 Nova Coluna</button>
+      </div>
+
+      <!-- Context Menu para textos -->
+      <div id="text-context-menu" class="context-menu hidden">
+        <button id="ctx-text-edit">✏️ Editar</button>
+        <button id="ctx-text-copy">📋 Copiar</button>
+        <button id="ctx-text-delete">🗑️ Excluir</button>
+      </div>
+
+      <!-- Context Menu para colunas -->
+      <div id="column-context-menu" class="context-menu hidden">
+        <button id="ctx-column-color">🎨 Mudar Cor</button>
+        <button id="ctx-column-copy">📋 Copiar</button>
+        <button id="ctx-column-delete">🗑️ Excluir</button>
+      </div>
     </div>
 
+    <script src="platform.js"></script>
+    <script src="touch.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

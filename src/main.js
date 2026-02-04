@@ -71,6 +71,37 @@ ipcMain.handle("save-data", async (event, data) => {
 
     const projectFile = path.join(appDir, `${currentProjectName}.vdoc`);
 
+    // PROTEÇÃO: Cria backup antes de salvar
+    if (fs.existsSync(projectFile)) {
+      const backupDir = path.join(appDir, ".backups");
+      if (!fs.existsSync(backupDir)) {
+        fs.mkdirSync(backupDir, { recursive: true });
+      }
+
+      // Mantém até 5 backups por projeto
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const backupFile = path.join(
+        backupDir,
+        `${currentProjectName}_${timestamp}.vdoc.bak`,
+      );
+      fs.copyFileSync(projectFile, backupFile);
+
+      // Remove backups antigos (mantém os 5 mais recentes)
+      const backups = fs
+        .readdirSync(backupDir)
+        .filter(
+          (f) => f.startsWith(currentProjectName) && f.endsWith(".vdoc.bak"),
+        )
+        .sort()
+        .reverse();
+
+      if (backups.length > 5) {
+        backups.slice(5).forEach((oldBackup) => {
+          fs.unlinkSync(path.join(backupDir, oldBackup));
+        });
+      }
+    }
+
     // Salva o arquivo .vdoc
     fs.writeFileSync(projectFile, JSON.stringify(data, null, 2), "utf-8");
 
@@ -84,19 +115,40 @@ ipcMain.handle("save-data", async (event, data) => {
   }
 });
 
-// Salvar SVG automaticamente
-ipcMain.handle("save-svg", async (event, svgContent) => {
+// Salvar TXT automaticamente
+ipcMain.handle("save-txt", async (event, txtContent) => {
   try {
     if (!currentProjectName) {
       return { success: false, error: "Nenhum projeto aberto" };
     }
 
     const appDir = getAppDirectory();
-    const svgFile = path.join(appDir, `${currentProjectName}.svg`);
+    const txtFile = path.join(appDir, `${currentProjectName}.txt`);
 
-    fs.writeFileSync(svgFile, svgContent, "utf-8");
+    fs.writeFileSync(txtFile, txtContent, "utf-8");
 
-    return { success: true, svgPath: svgFile };
+    return { success: true, txtPath: txtFile };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+});
+
+// Abrir arquivo TXT no programa padrão
+ipcMain.handle("open-txt", async () => {
+  try {
+    if (!currentProjectName) {
+      return { success: false, error: "Nenhum projeto aberto" };
+    }
+
+    const appDir = getAppDirectory();
+    const txtFile = path.join(appDir, `${currentProjectName}.txt`);
+
+    if (fs.existsSync(txtFile)) {
+      const { shell } = require("electron");
+      await shell.openPath(txtFile);
+      return { success: true, txtPath: txtFile };
+    }
+    return { success: false, error: "Arquivo TXT não encontrado" };
   } catch (error) {
     return { success: false, error: error.message };
   }
@@ -109,34 +161,6 @@ ipcMain.handle("load-data", async () => {
       return { success: true, data: JSON.parse(data) };
     }
     return { success: true, data: null };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-});
-
-ipcMain.handle("export-svg", async (event, svgContent) => {
-  try {
-    const defaultName = currentProjectName || "visualdoc";
-    const { filePath } = await dialog.showSaveDialog(mainWindow, {
-      title: "Exportar VisualDoc",
-      defaultPath: `${defaultName}.svg`,
-      filters: [
-        { name: "SVG", extensions: ["svg"] },
-        { name: "PNG", extensions: ["png"] },
-      ],
-    });
-
-    if (filePath) {
-      if (filePath.endsWith(".svg")) {
-        fs.writeFileSync(filePath, svgContent, "utf-8");
-      } else if (filePath.endsWith(".png")) {
-        // Para PNG, salvamos o SVG e o usuário pode converter
-        const svgPath = filePath.replace(".png", ".svg");
-        fs.writeFileSync(svgPath, svgContent, "utf-8");
-      }
-      return { success: true, filePath };
-    }
-    return { success: false, cancelled: true };
   } catch (error) {
     return { success: false, error: error.message };
   }

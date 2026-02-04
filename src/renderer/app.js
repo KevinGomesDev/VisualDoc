@@ -60,7 +60,6 @@ class VisualDocApp {
     this.canvasContainer = document.getElementById("canvas-container");
 
     // Toolbar
-    this.btnAddCard = document.getElementById("btn-add-card");
     this.btnExport = document.getElementById("btn-export");
     this.btnToggleTheme = document.getElementById("btn-toggle-theme");
     this.btnNewProject = document.getElementById("btn-new-project");
@@ -78,7 +77,6 @@ class VisualDocApp {
     this.checklistsContainer = document.getElementById("checklists-container");
     this.cardDetailsInput = document.getElementById("card-details");
     this.btnCloseModal = document.getElementById("btn-close-modal");
-    this.btnSaveCard = document.getElementById("btn-save-card");
     this.btnDeleteCard = document.getElementById("btn-delete-card");
     this.btnAddChecklist = document.getElementById("btn-add-checklist");
 
@@ -104,7 +102,6 @@ class VisualDocApp {
 
   bindEvents() {
     // Toolbar events
-    this.btnAddCard.addEventListener("click", () => this.createNewCard());
     this.btnExport.addEventListener("click", () => this.exportSVG());
     this.btnToggleTheme.addEventListener("click", () => this.toggleTheme());
     this.btnNewProject.addEventListener("click", () => this.newProject());
@@ -125,7 +122,6 @@ class VisualDocApp {
 
     // Modal events
     this.btnCloseModal.addEventListener("click", () => this.closeModal());
-    this.btnSaveCard.addEventListener("click", () => this.saveCardFromModal());
     this.btnDeleteCard.addEventListener("click", () =>
       this.deleteSelectedCard(),
     );
@@ -1468,7 +1464,12 @@ class VisualDocApp {
           <option value="">Sem categoria</option>
           ${categoryOptions}
         </select>
-        <button class="btn-toggle-details" title="Descrição">📝</button>
+        <button class="btn-toggle-details" title="Descrição">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+            <path d="m15 5 4 4"/>
+          </svg>
+        </button>
         <button class="btn-remove-checklist" title="Remover">&times;</button>
       </div>
       <div class="checklist-item-details ${checklist?.details ? "" : "hidden"}">

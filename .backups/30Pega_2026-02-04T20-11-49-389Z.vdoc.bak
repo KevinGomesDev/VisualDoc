@@ -1,0 +1,103 @@
+{
+  "cards": [
+    {
+      "id": "card_1770228465100_fjl8xegra",
+      "title": "Sem título",
+      "categoryIds": [
+        "cat-1"
+      ],
+      "categoryId": "cat-1",
+      "category": "Geral",
+      "details": "",
+      "color": "#6c5ce7",
+      "x": 540,
+      "y": -317,
+      "checklists": [
+        {
+          "id": "card_1770235327193_99ghgqry1",
+          "name": "aaa",
+          "details": "",
+          "completed": false,
+          "categoryId": "cat-2"
+        }
+      ],
+      "width": 359,
+      "height": 100
+    },
+    {
+      "id": "card_1770235358264_asa7bxn8b",
+      "title": "Novo Card",
+      "categoryIds": [
+        "cat-1"
+      ],
+      "categoryId": "cat-1",
+      "category": "Geral",
+      "details": "",
+      "color": "#6c5ce7",
+      "x": 898,
+      "y": -564,
+      "checklists": []
+    },
+    {
+      "id": "card_1770235364385_mrpbelvrm",
+      "title": "Novo Card",
+      "categoryIds": [
+        "cat-1"
+      ],
+      "categoryId": "cat-1",
+      "category": "Geral",
+      "details": "",
+      "color": "#6c5ce7",
+      "x": 731.1428571428571,
+      "y": 124.57142857142856,
+      "checklists": []
+    }
+  ],
+  "connections": [],
+  "texts": [
+    {
+      "id": "card_1770235357114_uf3pdliky",
+      "content": "Olá",
+      "x": 1289.2549019607845,
+      "y": -776.627450980392,
+      "fontSize": 82.16993464052288,
+      "color": "#ffffff",
+      "width": 735.2941176470588
+    }
+  ],
+  "columns": [
+    {
+      "id": "card_1770235360181_xwuk11dqr",
+      "x": 1461.7254901960785,
+      "y": -555.0196078431371,
+      "width": 1164.7058823529412,
+      "height": 507.843137254902,
+      "color": "#6c5ce7",
+      "opacity": 0.7
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-1",
+      "name": "Geral",
+      "color": "#6c5ce7"
+    },
+    {
+      "id": "cat-2",
+      "name": "Frontend",
+      "color": "#00b894"
+    },
+    {
+      "id": "cat-3",
+      "name": "Backend",
+      "color": "#e17055"
+    },
+    {
+      "id": "cat-4",
+      "name": "Design",
+      "color": "#fdcb6e"
+    }
+  ],
+  "projectName": "30Pega",
+  "lastModified": "2026-02-04T20:11:48.192Z"
+}

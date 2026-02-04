@@ -3,8 +3,8 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("electronAPI", {
   saveData: (data) => ipcRenderer.invoke("save-data", data),
   loadData: () => ipcRenderer.invoke("load-data"),
-  saveSVG: (svgContent) => ipcRenderer.invoke("save-svg", svgContent),
-  exportSVG: (svgContent) => ipcRenderer.invoke("export-svg", svgContent),
+  saveTXT: (txtContent) => ipcRenderer.invoke("save-txt", txtContent),
+  openTXT: () => ipcRenderer.invoke("open-txt"),
   getDataPath: () => ipcRenderer.invoke("get-data-path"),
   getAppDirectory: () => ipcRenderer.invoke("get-app-directory"),
   setProjectName: (name) => ipcRenderer.invoke("set-project-name", name),
