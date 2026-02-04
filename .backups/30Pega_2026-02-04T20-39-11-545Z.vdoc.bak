@@ -37,20 +37,6 @@
       "x": 898,
       "y": -564,
       "checklists": []
-    },
-    {
-      "id": "card_1770235364385_mrpbelvrm",
-      "title": "Novo Card",
-      "categoryIds": [
-        "cat-1"
-      ],
-      "categoryId": "cat-1",
-      "category": "Geral",
-      "details": "",
-      "color": "#6c5ce7",
-      "x": 488.1428571428571,
-      "y": 274.57142857142856,
-      "checklists": []
     }
   ],
   "connections": [],
@@ -77,5 +63,5 @@
     }
   ],
   "projectName": "30Pega",
-  "lastModified": "2026-02-04T20:37:00.806Z"
+  "lastModified": "2026-02-04T20:38:11.515Z"
 }

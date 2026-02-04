@@ -98,6 +98,12 @@ class VisualDocApp {
     this.ctxDisconnect = document.getElementById("ctx-disconnect");
     this.ctxEdit = document.getElementById("ctx-edit");
     this.ctxDelete = document.getElementById("ctx-delete");
+
+    // Canvas Context Menu
+    this.canvasContextMenu = document.getElementById("canvas-context-menu");
+    this.ctxNewCard = document.getElementById("ctx-new-card");
+    this.ctxNewText = document.getElementById("ctx-new-text");
+    this.ctxNewColumn = document.getElementById("ctx-new-column");
   }
 
   bindEvents() {
@@ -133,6 +139,9 @@ class VisualDocApp {
     this.canvasContainer.addEventListener("mousedown", (e) =>
       this.onCanvasMouseDown(e),
     );
+    this.canvasContainer.addEventListener("contextmenu", (e) =>
+      this.onCanvasContextMenu(e),
+    );
     document.addEventListener("mousemove", (e) => this.onMouseMove(e));
     document.addEventListener("mouseup", (e) => this.onMouseUp(e));
     this.canvasContainer.addEventListener("wheel", (e) => this.onWheel(e));
@@ -143,10 +152,18 @@ class VisualDocApp {
     this.ctxEdit.addEventListener("click", () => this.editSelectedCard());
     this.ctxDelete.addEventListener("click", () => this.deleteSelectedCard());
 
+    // Canvas context menu events
+    this.ctxNewCard.addEventListener("click", () => this.createNewCard());
+    this.ctxNewText.addEventListener("click", () => this.createNewText());
+    this.ctxNewColumn.addEventListener("click", () => this.createNewColumn());
+
     // Close context menu on click outside
     document.addEventListener("click", (e) => {
       if (!this.contextMenu.contains(e.target)) {
         this.hideContextMenu();
+      }
+      if (!this.canvasContextMenu.contains(e.target)) {
+        this.hideCanvasContextMenu();
       }
     });
 
@@ -157,6 +174,7 @@ class VisualDocApp {
         if (e.key === "Escape") {
           this.closeModal();
           this.hideContextMenu();
+          this.hideCanvasContextMenu();
         }
         return;
       }
@@ -164,6 +182,7 @@ class VisualDocApp {
       if (e.key === "Escape") {
         this.closeModal();
         this.hideContextMenu();
+        this.hideCanvasContextMenu();
         this.cancelConnecting();
         this.clearSelection();
       }
@@ -1004,6 +1023,7 @@ class VisualDocApp {
       e.target.id === "connections-layer"
     ) {
       this.hideContextMenu();
+      this.hideCanvasContextMenu();
 
       // Se está no modo de conexão, cancela
       if (this.isConnecting) {
@@ -1112,6 +1132,19 @@ class VisualDocApp {
     e.preventDefault();
     this.selectedCardId = cardId;
     this.showContextMenu(e.clientX, e.clientY);
+  }
+
+  onCanvasContextMenu(e) {
+    // Se clicou no fundo (não em um card), mostra menu do canvas
+    if (
+      e.target === this.canvasContainer ||
+      e.target === this.cardsContainer ||
+      e.target.id === "connections-layer"
+    ) {
+      e.preventDefault();
+      this.hideContextMenu(); // Esconde menu de card se estiver aberto
+      this.showCanvasContextMenu(e.clientX, e.clientY);
+    }
   }
 
   onConnectorMouseDown(e, cardId) {
@@ -1362,6 +1395,7 @@ class VisualDocApp {
   // ==========================================
 
   showContextMenu(x, y) {
+    this.hideCanvasContextMenu(); // Esconde menu do canvas se estiver aberto
     this.contextMenu.classList.remove("hidden");
     this.contextMenu.style.left = `${x}px`;
     this.contextMenu.style.top = `${y}px`;
@@ -1369,6 +1403,17 @@ class VisualDocApp {
 
   hideContextMenu() {
     this.contextMenu.classList.add("hidden");
+  }
+
+  showCanvasContextMenu(x, y) {
+    this.hideContextMenu(); // Esconde menu de card se estiver aberto
+    this.canvasContextMenu.classList.remove("hidden");
+    this.canvasContextMenu.style.left = `${x}px`;
+    this.canvasContextMenu.style.top = `${y}px`;
+  }
+
+  hideCanvasContextMenu() {
+    this.canvasContextMenu.classList.add("hidden");
   }
 
   // ==========================================

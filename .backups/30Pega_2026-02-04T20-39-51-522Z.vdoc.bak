@@ -10,8 +10,8 @@
       "category": "Geral",
       "details": "",
       "color": "#6c5ce7",
-      "x": 540,
-      "y": -317,
+      "x": 278,
+      "y": -690,
       "checklists": [
         {
           "id": "card_1770235327193_99ghgqry1",
@@ -37,23 +37,18 @@
       "x": 898,
       "y": -564,
       "checklists": []
-    },
-    {
-      "id": "card_1770235364385_mrpbelvrm",
-      "title": "Novo Card",
-      "categoryIds": [
-        "cat-1"
-      ],
-      "categoryId": "cat-1",
-      "category": "Geral",
-      "details": "",
-      "color": "#6c5ce7",
-      "x": 488.1428571428571,
-      "y": 274.57142857142856,
-      "checklists": []
     }
   ],
-  "connections": [],
+  "connections": [
+    {
+      "from": "card_1770228465100_fjl8xegra",
+      "to": "card_1770235358264_asa7bxn8b",
+      "fromCardId": "card_1770228465100_fjl8xegra",
+      "toCardId": "card_1770235358264_asa7bxn8b",
+      "fromChecklistId": null,
+      "toChecklistId": null
+    }
+  ],
   "categories": [
     {
       "id": "cat-1",
@@ -77,5 +72,5 @@
     }
   ],
   "projectName": "30Pega",
-  "lastModified": "2026-02-04T20:36:06.772Z"
+  "lastModified": "2026-02-04T20:39:49.183Z"
 }
