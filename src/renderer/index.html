@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VisualDoc - Documentação Visual</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <h1>📝 VisualDoc</h1>
+          <button id="btn-new-project" class="btn btn-secondary">
+            📄 Novo Projeto
+          </button>
+          <button id="btn-load-project" class="btn btn-secondary">
+            📂 Carregar
+          </button>
+          <button id="btn-save-project" class="btn btn-secondary">
+            💾 Salvar Como
+          </button>
+          <div class="toolbar-divider"></div>
+          <button id="btn-add-card" class="btn btn-primary">
+            <span>+</span> Novo Card
+          </button>
+          <button id="btn-export" class="btn btn-secondary">
+            📤 Exportar SVG
+          </button>
+        </div>
+        <div class="toolbar-right">
+          <span id="save-status" class="save-status">✓ Salvo</span>
+          <button id="btn-reset-view" class="btn btn-icon">⌂</button>
+        </div>
+      </div>
+
+      <!-- Canvas Principal -->
+      <div id="canvas-container">
+        <svg id="connections-layer" style="overflow: visible"></svg>
+        <div id="cards-container"></div>
+      </div>
+
+      <!-- Modal de Edição de Card -->
+      <div id="card-modal" class="modal hidden">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modal-title">Editar Card</h2>
+            <button id="btn-close-modal" class="btn-close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="card-title">Título</label>
+              <input type="text" id="card-title" placeholder="Nome do card" />
+            </div>
+            <div class="form-group">
+              <label for="card-category">Categoria</label>
+              <input
+                type="text"
+                id="card-category"
+                placeholder="Ex: Frontend, Backend, Design"
+              />
+            </div>
+            <div class="form-group">
+              <label for="card-color">Cor</label>
+              <input type="color" id="card-color" value="#6c5ce7" />
+            </div>
+            <div class="form-group">
+              <label for="card-details">Detalhes</label>
+              <textarea
+                id="card-details"
+                placeholder="Descrição ou notas sobre este card (aparece ao passar o mouse)"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="checklist-section">
+              <div class="checklist-header">
+                <h3>Checklists</h3>
+                <button id="btn-add-checklist" class="btn btn-small">
+                  + Adicionar
+                </button>
+              </div>
+              <div id="checklists-container"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btn-delete-card" class="btn btn-danger">
+              Excluir Card
+            </button>
+            <button id="btn-save-card" class="btn btn-primary">Salvar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Context Menu para conexões -->
+      <div id="context-menu" class="context-menu hidden">
+        <button id="ctx-connect">🔗 Conectar a...</button>
+        <button id="ctx-disconnect">❌ Remover conexões</button>
+        <button id="ctx-edit">✏️ Editar</button>
+        <button id="ctx-delete">🗑️ Excluir</button>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
