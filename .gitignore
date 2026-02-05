@@ -18,7 +18,7 @@ npm-debug.log*
 
 # Project files (user data)
 *.vdoc
-*.svg
+*.txt
 
 # Electron cache
 .electron/

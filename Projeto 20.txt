@@ -2,7 +2,7 @@
 VISUALDOC - MAPA DO PROJETO
 ============================================================
 Projeto: Projeto 20
-Última atualização: 05/02/2026, 09:50:17
+Última atualização: 05/02/2026, 09:50:52
 
 📊 ESTATÍSTICAS
 ----------------------------------------
@@ -12,7 +12,7 @@ Projeto: Projeto 20
 • Total de Conexões: 1
 • Total de Categorias: 4
 • Total de Checklists: 2
-• Checklists Concluídos: 2/2 (100%)
+• Checklists Concluídos: 1/2 (50%)
 
 🏷️ CATEGORIAS
 ----------------------------------------
@@ -48,10 +48,10 @@ Projeto: Projeto 20
       Cor: #6c5ce7
       Posição: (1349, 49)
       Tamanho: 427x208px
-      Progresso: 2/2 (100%)
+      Progresso: 1/2 (50%)
       Checklist:
         [✓] Item 1 [Geral]
-        [✓] Item 2 [Importante]
+        [ ] Item 2 [Importante]
 
   [2] CARD: Novo Card
       ID: card_1770295469744_2bl6oqjim

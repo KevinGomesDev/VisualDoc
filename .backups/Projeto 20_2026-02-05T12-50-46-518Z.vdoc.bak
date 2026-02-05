@@ -17,14 +17,14 @@
           "id": "card_1770295395470_clrsi2zp2",
           "name": "Item 1",
           "details": "",
-          "completed": false,
+          "completed": true,
           "categoryId": "1"
         },
         {
           "id": "card_1770295396080_jkarzymjs",
           "name": "Item 2",
           "details": "",
-          "completed": false,
+          "completed": true,
           "categoryId": "2"
         }
       ],
@@ -105,5 +105,5 @@
     }
   ],
   "projectName": "Projeto 20",
-  "lastModified": "2026-02-05T12:50:04.190Z"
+  "lastModified": "2026-02-05T12:50:17.419Z"
 }
