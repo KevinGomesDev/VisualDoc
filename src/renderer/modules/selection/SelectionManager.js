@@ -201,7 +201,7 @@ class SelectionManager {
 
     this.clear();
     this.selectedItemIds = newItems;
-    
+
     // Seleciona visualmente os novos itens
     newItems.forEach(({ id, type }) => {
       let el = null;
