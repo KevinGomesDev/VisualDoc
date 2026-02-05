@@ -134,6 +134,7 @@ class TextManager {
       this.app.resizeStart = {
         width: text.width || 200,
         height: text.height || textElement.offsetHeight,
+        fontSize: text.fontSize || 16,
         mouseX: e.clientX,
         mouseY: e.clientY,
       };
@@ -170,10 +171,26 @@ class TextManager {
       const deltaY = (e.clientY - this.app.resizeStart.mouseY) / this.app.zoom;
       const newWidth = Math.max(50, this.app.resizeStart.width + deltaX);
       const newHeight = Math.max(20, this.app.resizeStart.height + deltaY);
+
+      // Calcula o fator de escala baseado na mudança de tamanho
+      const scaleX = newWidth / this.app.resizeStart.width;
+      const scaleY = newHeight / this.app.resizeStart.height;
+      // Usa a média dos fatores para um crescimento proporcional
+      const scaleFactor = (scaleX + scaleY) / 2;
+
+      // Ajusta o fontSize proporcionalmente
+      const baseFontSize = this.app.resizeStart.fontSize || 16;
+      const newFontSize = Math.max(
+        8,
+        Math.min(200, baseFontSize * scaleFactor),
+      );
+
       text.width = newWidth;
       text.height = newHeight;
+      text.fontSize = newFontSize;
       textElement.style.width = `${newWidth}px`;
       textElement.style.height = `${newHeight}px`;
+      textElement.style.fontSize = `${newFontSize}px`;
     }
   }
 }
