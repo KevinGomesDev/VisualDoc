@@ -1,0 +1,117 @@
+{
+  "cards": [
+    {
+      "id": "card_1770295389522_capft3c3q",
+      "title": "Novo Card",
+      "categoryIds": [
+        1
+      ],
+      "categoryId": 1,
+      "category": "Geral",
+      "details": "",
+      "color": "#6c5ce7",
+      "x": 1348.952380952381,
+      "y": 48.761904761904816,
+      "checklists": [
+        {
+          "id": "card_1770295395470_clrsi2zp2",
+          "name": "Item 1",
+          "details": "",
+          "completed": false,
+          "categoryId": "1"
+        },
+        {
+          "id": "card_1770295396080_jkarzymjs",
+          "name": "Item 2",
+          "details": "",
+          "completed": false,
+          "categoryId": "2"
+        }
+      ],
+      "width": 426.55555555555554,
+      "height": 208.44444444444446
+    },
+    {
+      "id": "card_1770295469744_2bl6oqjim",
+      "title": "Novo Card",
+      "categoryIds": [
+        1
+      ],
+      "categoryId": 1,
+      "category": "Geral",
+      "details": "",
+      "color": "#6c5ce7",
+      "x": 1816.6666666666667,
+      "y": 431.1111111111111,
+      "checklists": []
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn_1770295568442_7hvshvymg",
+      "from": "card_1770295389522_capft3c3q:card_1770295396080_jkarzymjs",
+      "to": "card_1770295469744_2bl6oqjim",
+      "fromCardId": "card_1770295389522_capft3c3q",
+      "toCardId": "card_1770295469744_2bl6oqjim",
+      "fromChecklistId": null,
+      "toChecklistId": null,
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null,
+      "fixedFromSide": "bottom"
+    }
+  ],
+  "texts": [
+    {
+      "id": "card_1770295428824_fi4sf354d",
+      "content": "Novo Texto",
+      "x": 1934.4444444444443,
+      "y": 71.44444444444446,
+      "fontSize": 16,
+      "color": "#ffffff",
+      "width": 200
+    }
+  ],
+  "columns": [
+    {
+      "id": "card_1770295455010_z9o9mxkau",
+      "x": 2378.412698412699,
+      "y": 8.412698412698418,
+      "width": 300,
+      "height": 200,
+      "color": "#6c5ce7"
+    },
+    {
+      "id": "card_1770295788843_gmx1glb2e",
+      "x": 1964.4126984126988,
+      "y": -167.58730158730157,
+      "width": 300,
+      "height": 200,
+      "color": "#6c5ce7"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Geral",
+      "color": "#6c5ce7"
+    },
+    {
+      "id": 2,
+      "name": "Importante",
+      "color": "#e74c3c"
+    },
+    {
+      "id": 3,
+      "name": "Em ProgressoAAAAAAAAAAAAAAA",
+      "color": "#f39c12"
+    },
+    {
+      "id": 4,
+      "name": "Concluído",
+      "color": "#27ae60"
+    }
+  ],
+  "projectName": "Projeto 20",
+  "lastModified": "2026-02-05T12:50:02.362Z"
+}

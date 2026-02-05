@@ -119,7 +119,10 @@ class ColumnManager {
     const colorInput = document.createElement("input");
     colorInput.type = "color";
     colorInput.value = column.color || "#6c5ce7";
-    colorInput.style.position = "absolute";
+    colorInput.style.position = "fixed";
+    colorInput.style.left = "50%";
+    colorInput.style.top = "50%";
+    colorInput.style.transform = "translate(-50%, -50%)";
     colorInput.style.opacity = "0";
     colorInput.style.pointerEvents = "none";
     document.body.appendChild(colorInput);

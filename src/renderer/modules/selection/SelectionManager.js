@@ -75,7 +75,7 @@ class SelectionManager {
   }
 
   // Limpa a seleção
-  clear() {
+  clear(keepConnections = false) {
     this.selectedItemIds.forEach(({ id, type }) => {
       const prefix =
         type === "card" ? "card" : type === "text" ? "text" : "column";
@@ -98,8 +98,8 @@ class SelectionManager {
     this.selectedCardIds = [];
     this.selectedCardId = null;
 
-    // Deselect connections
-    if (this.app.connectionManager) {
+    // Deselect connections (unless we're selecting a connection)
+    if (!keepConnections && this.app.connectionManager) {
       this.app.connectionManager.deselect();
     }
   }
@@ -120,59 +120,101 @@ class SelectionManager {
     });
   }
 
-  // Copia cards selecionados
+  // Copia itens selecionados (cards, textos, colunas)
   copy() {
-    if (this.selectedCardIds.length === 0) return;
+    if (this.selectedItemIds.length === 0) return;
 
-    this.clipboard = this.selectedCardIds
-      .map((cardId) => {
-        const card = this.app.cards.find((c) => c.id === cardId);
-        if (card) {
-          return JSON.parse(JSON.stringify(card));
+    this.clipboard = this.selectedItemIds
+      .map(({ id, type }) => {
+        let item = null;
+        if (type === "card") {
+          item = this.app.cards.find((c) => c.id === id);
+        } else if (type === "text") {
+          item = this.app.texts.find((t) => t.id === id);
+        } else if (type === "column") {
+          item = this.app.columns.find((c) => c.id === id);
+        }
+        if (item) {
+          return { type, data: JSON.parse(JSON.stringify(item)) };
         }
         return null;
       })
       .filter(Boolean);
 
-    if (this.app.saveStatus) {
-      this.app.saveStatus.textContent = `📋 ${this.clipboard.length} card(s) copiado(s)`;
+    if (this.app.saveStatus && this.clipboard.length > 0) {
+      this.app.saveStatus.textContent = `📋 ${this.clipboard.length} item(s) copiado(s)`;
       setTimeout(() => {
         this.app.saveStatus.textContent = "✓ Salvo";
       }, 1500);
     }
   }
 
-  // Cola cards
+  // Cola itens
   paste() {
     if (this.clipboard.length === 0) return;
 
     const offset = 30;
-    const newCards = [];
+    const newItems = [];
 
-    this.clipboard.forEach((cardData, index) => {
-      const newCard = {
-        ...cardData,
-        id: this.app.generateId(),
-        x: cardData.x + offset + index * 10,
-        y: cardData.y + offset + index * 10,
-        checklists: cardData.checklists.map((cl) => ({
-          ...cl,
-          id: this.app.generateId(),
-        })),
-      };
-      this.app.cards.push(newCard);
-      newCards.push(newCard);
+    this.clipboard.forEach((clipboardItem, index) => {
+      const { type, data } = clipboardItem;
+      const newId = this.app.generateId();
+      const newX = data.x + offset + index * 10;
+      const newY = data.y + offset + index * 10;
+
+      if (type === "card") {
+        const newCard = {
+          ...data,
+          id: newId,
+          x: newX,
+          y: newY,
+          checklists: data.checklists.map((cl) => ({
+            ...cl,
+            id: this.app.generateId(),
+          })),
+        };
+        this.app.cards.push(newCard);
+        this.app.cardManager.render(newCard);
+        newItems.push({ id: newId, type: "card" });
+      } else if (type === "text") {
+        const newText = {
+          ...data,
+          id: newId,
+          x: newX,
+          y: newY,
+        };
+        this.app.texts.push(newText);
+        this.app.textManager.render(newText);
+        newItems.push({ id: newId, type: "text" });
+      } else if (type === "column") {
+        const newColumn = {
+          ...data,
+          id: newId,
+          x: newX,
+          y: newY,
+        };
+        this.app.columns.push(newColumn);
+        this.app.columnManager.render(newColumn);
+        newItems.push({ id: newId, type: "column" });
+      }
     });
 
-    newCards.forEach((card) => this.app.cardManager.render(card));
-
     this.clear();
-    this.selectedCardIds = newCards.map((c) => c.id);
-    this.selectedItemIds = newCards.map((c) => ({ id: c.id, type: "card" }));
-    this.selectedCardIds.forEach((cardId) => {
-      const cardElement = document.getElementById(`card-${cardId}`);
-      if (cardElement) {
-        cardElement.classList.add("selected");
+    this.selectedItemIds = newItems;
+    
+    // Seleciona visualmente os novos itens
+    newItems.forEach(({ id, type }) => {
+      let el = null;
+      if (type === "card") {
+        el = document.getElementById(`card-${id}`);
+        this.selectedCardIds.push(id);
+      } else if (type === "text") {
+        el = document.getElementById(`text-${id}`);
+      } else if (type === "column") {
+        el = document.getElementById(`column-${id}`);
+      }
+      if (el) {
+        el.classList.add("selected");
       }
     });
 
@@ -180,7 +222,7 @@ class SelectionManager {
     this.app.saveData();
 
     if (this.app.saveStatus) {
-      this.app.saveStatus.textContent = `📋 ${newCards.length} card(s) colado(s)`;
+      this.app.saveStatus.textContent = `📋 ${newItems.length} item(s) colado(s)`;
       setTimeout(() => {
         this.app.saveStatus.textContent = "✓ Salvo";
       }, 1500);

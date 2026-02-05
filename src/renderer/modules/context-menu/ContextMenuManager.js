@@ -8,22 +8,59 @@ class ContextMenuManager {
     this.contextMenuPosition = { x: 0, y: 0 };
   }
 
-  // Mostra menu de contexto de item (card, text, column)
-  showItemMenu(x, y) {
-    this.hideCanvasMenu();
+  // Mostra menu de contexto de card
+  showCardMenu(x, y) {
+    this.hideAll();
     this.app.contextMenu.classList.remove("hidden");
     this.app.contextMenu.style.left = `${x}px`;
     this.app.contextMenu.style.top = `${y}px`;
   }
 
-  // Esconde menu de contexto de item
+  // Mostra menu de contexto de texto
+  showTextMenu(x, y) {
+    this.hideAll();
+    this.app.textContextMenu.classList.remove("hidden");
+    this.app.textContextMenu.style.left = `${x}px`;
+    this.app.textContextMenu.style.top = `${y}px`;
+  }
+
+  // Mostra menu de contexto de coluna
+  showColumnMenu(x, y) {
+    this.hideAll();
+    this.app.columnContextMenu.classList.remove("hidden");
+    this.app.columnContextMenu.style.left = `${x}px`;
+    this.app.columnContextMenu.style.top = `${y}px`;
+  }
+
+  // Mostra menu de contexto baseado no tipo de item
+  showItemMenu(x, y, itemType = "card") {
+    if (itemType === "text") {
+      this.showTextMenu(x, y);
+    } else if (itemType === "column") {
+      this.showColumnMenu(x, y);
+    } else {
+      this.showCardMenu(x, y);
+    }
+  }
+
+  // Esconde menu de contexto de item (card)
   hideItemMenu() {
     this.app.contextMenu.classList.add("hidden");
   }
 
+  // Esconde menu de contexto de texto
+  hideTextMenu() {
+    this.app.textContextMenu.classList.add("hidden");
+  }
+
+  // Esconde menu de contexto de coluna
+  hideColumnMenu() {
+    this.app.columnContextMenu.classList.add("hidden");
+  }
+
   // Mostra menu de contexto do canvas
   showCanvasMenu(x, y) {
-    this.hideItemMenu();
+    this.hideAll();
     this.contextMenuPosition = { x, y };
     this.app.canvasContextMenu.classList.remove("hidden");
     this.app.canvasContextMenu.style.left = `${x}px`;
@@ -39,6 +76,8 @@ class ContextMenuManager {
   // Esconde todos os menus
   hideAll() {
     this.hideItemMenu();
+    this.hideTextMenu();
+    this.hideColumnMenu();
     this.hideCanvasMenu();
   }
 
@@ -49,7 +88,7 @@ class ContextMenuManager {
 
   // Vincula eventos
   bindEvents() {
-    // Context menu item events
+    // Context menu item events (Cards)
     this.app.ctxConnect.addEventListener("click", () => {
       this.hideItemMenu();
       this.app.startConnectingFrom(this.app.selectedCardId);
@@ -77,6 +116,34 @@ class ContextMenuManager {
       }
     });
 
+    // Text context menu events
+    this.app.ctxTextDelete.addEventListener("click", () => {
+      this.hideTextMenu();
+      if (this.app.selectedItemId && this.app.selectedItemType === "text") {
+        this.app.deleteItem(this.app.selectedItemId, "text");
+      }
+    });
+
+    // Column context menu events
+    this.app.ctxColumnColor.addEventListener("click", () => {
+      this.hideColumnMenu();
+      if (this.app.selectedItemId && this.app.selectedItemType === "column") {
+        const column = this.app.columns.find(
+          (c) => c.id === this.app.selectedItemId,
+        );
+        if (column) {
+          this.app.columnManager.openColorPicker(column);
+        }
+      }
+    });
+
+    this.app.ctxColumnDelete.addEventListener("click", () => {
+      this.hideColumnMenu();
+      if (this.app.selectedItemId && this.app.selectedItemType === "column") {
+        this.app.deleteItem(this.app.selectedItemId, "column");
+      }
+    });
+
     // Canvas context menu events
     this.app.ctxNewCard.addEventListener("click", () => {
       const card = this.app.cardManager.create();
@@ -101,6 +168,12 @@ class ContextMenuManager {
     document.addEventListener("click", (e) => {
       if (!this.app.contextMenu.contains(e.target)) {
         this.hideItemMenu();
+      }
+      if (!this.app.textContextMenu.contains(e.target)) {
+        this.hideTextMenu();
+      }
+      if (!this.app.columnContextMenu.contains(e.target)) {
+        this.hideColumnMenu();
       }
       if (!this.app.canvasContextMenu.contains(e.target)) {
         this.hideCanvasMenu();

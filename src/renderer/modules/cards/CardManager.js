@@ -192,9 +192,10 @@ class CardManager {
 
     // Conectores do card
     cardElement.querySelectorAll(".card-connector").forEach((connector) => {
-      connector.addEventListener("mousedown", (e) =>
-        this.app.onConnectorMouseDown(e, card.id),
-      );
+      connector.addEventListener("mousedown", (e) => {
+        const side = connector.dataset.side;
+        this.app.onConnectorMouseDown(e, card.id, side);
+      });
     });
 
     // Conectores de checklist

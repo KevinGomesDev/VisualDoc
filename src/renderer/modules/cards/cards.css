@@ -103,8 +103,10 @@
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
-  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   flex: 1;
+  min-width: 0;
 }
 
 /* Card Categories */
@@ -113,6 +115,7 @@
   flex-wrap: wrap;
   gap: 4px;
   justify-content: flex-end;
+  max-width: 60%;
 }
 
 .card-category {
@@ -122,10 +125,9 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  white-space: normal;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   max-width: 100%;
 }
 
@@ -143,6 +145,7 @@
   justify-content: space-between;
   gap: 8px;
   padding: 8px 10px;
+  min-height: 40px;
   font-size: 0.85rem;
   color: var(--text-secondary);
   background-color: rgba(0, 0, 0, 0.2);
@@ -167,10 +170,16 @@
   align-items: center;
   gap: 8px;
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .checklist-item-content > span:first-of-type {
   flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  min-width: 0;
 }
 
 .checklist-category-label {

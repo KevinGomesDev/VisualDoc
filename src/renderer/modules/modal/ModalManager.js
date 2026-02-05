@@ -225,18 +225,23 @@ class ModalManager {
     this.app.btnCloseModal.addEventListener("click", () =>
       this.closeCardModal(),
     );
-    this.app.btnDeleteCard.addEventListener("click", () => {
-      const cardIdToDelete = this.app.selectedCardId;
-      this.app.cardModal.classList.add("hidden");
-      if (cardIdToDelete) {
-        this.app.cardManager.delete(cardIdToDelete);
-        this.app.selectedCardId = null;
-        this.selectedCategoryIds = [];
-      }
-    });
     this.app.btnAddChecklist.addEventListener("click", () =>
       this.addChecklistInput(),
     );
+
+    // Fechar modal ao clicar fora
+    this.app.cardModal.addEventListener("click", (e) => {
+      if (e.target === this.app.cardModal) {
+        this.closeCardModal();
+      }
+    });
+
+    // Fechar modal de categorias ao clicar fora
+    this.app.categoriesModal.addEventListener("click", (e) => {
+      if (e.target === this.app.categoriesModal) {
+        this.app.categoryManager.closeModal();
+      }
+    });
   }
 }
 

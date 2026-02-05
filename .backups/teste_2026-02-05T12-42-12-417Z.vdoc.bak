@@ -13,50 +13,78 @@
       "category": "Geral",
       "details": "Teste",
       "color": "#6c5ce7",
-      "x": 726.5714285714286,
-      "y": 124.07142857142864,
+      "x": 494.42857142857133,
+      "y": 52.21428571428578,
       "checklists": [
         {
           "id": "card_1770241858884_hwer2n0qs",
           "name": "Teste",
           "details": "",
           "completed": false,
-          "categoryId": "1"
+          "categoryId": "4"
         },
         {
           "id": "card_1770245057888_vcn5yxmkm",
           "name": "Teste 2",
           "details": "",
           "completed": false,
-          "categoryId": "2"
+          "categoryId": "4"
         }
       ],
-      "width": 450,
-      "height": 220
+      "width": 551,
+      "height": 362
     },
     {
       "id": "card_1770242668663_gd93drc4k",
-      "title": "Novo Card",
+      "title": "Card Número 1",
       "categoryIds": [
         1
       ],
       "categoryId": 1,
       "category": "Geral",
-      "details": "",
+      "details": "Teste",
       "color": "#6c5ce7",
-      "x": 541,
-      "y": -248.03571428571422,
+      "x": 566.3928571428571,
+      "y": -467.46428571428567,
       "checklists": [
         {
           "id": "card_1770242668663_uu938ugjt",
-          "name": "Teste",
+          "name": "Item 1",
+          "details": "",
+          "completed": true,
+          "categoryId": "3"
+        },
+        {
+          "id": "card_1770294351916_qjioutllu",
+          "name": "Item 5",
           "details": "",
           "completed": false,
-          "categoryId": "3"
+          "categoryId": null
+        },
+        {
+          "id": "card_1770294350008_bmdaj521g",
+          "name": "Item 2",
+          "details": "",
+          "completed": false,
+          "categoryId": "2"
+        },
+        {
+          "id": "card_1770294350548_4i4dkvm4y",
+          "name": "Item 3",
+          "details": "",
+          "completed": false,
+          "categoryId": null
+        },
+        {
+          "id": "card_1770294351042_5hfx2nkye",
+          "name": "Item 4",
+          "details": "",
+          "completed": false,
+          "categoryId": null
         }
       ],
-      "width": 218,
-      "height": 100
+      "width": 485.14285714285717,
+      "height": 319.2857142857143
     }
   ],
   "connections": [
@@ -133,7 +161,19 @@
       "fixedToPoint": null
     },
     {
-      "id": "conn_1770244295576_8xdfxqx3p",
+      "id": "conn_1770294932625_ib571i5tn",
+      "from": "card_1770242668663_gd93drc4k:card_1770294350008_bmdaj521g",
+      "to": "card_1770240862791_l7uy0qlxm:card_1770241858884_hwer2n0qs",
+      "fromCardId": "card_1770242668663_gd93drc4k",
+      "toCardId": "card_1770240862791_l7uy0qlxm",
+      "fromChecklistId": "card_1770294350008_bmdaj521g",
+      "toChecklistId": "card_1770241858884_hwer2n0qs",
+      "waypoints": [],
+      "fixedFromPoint": null,
+      "fixedToPoint": null
+    },
+    {
+      "id": "conn_1770295319080_0fwqpnnx6",
       "from": "card_1770240862791_l7uy0qlxm",
       "to": "card_1770242668663_gd93drc4k",
       "fromCardId": "card_1770240862791_l7uy0qlxm",
@@ -142,44 +182,29 @@
       "toChecklistId": null,
       "waypoints": [],
       "fixedFromPoint": null,
-      "fixedToPoint": null,
-      "fixedToSide": "bottom",
-      "fixedFromSide": null
-    },
-    {
-      "id": "conn_1770244822729_6z61lt98r",
-      "from": "card_1770240862791_l7uy0qlxm:card_1770245057888_vcn5yxmkm",
-      "to": "card_1770242668663_gd93drc4k:card_1770242668663_uu938ugjt",
-      "fromCardId": "card_1770240862791_l7uy0qlxm",
-      "toCardId": "card_1770242668663_gd93drc4k",
-      "fromChecklistId": "card_1770245057888_vcn5yxmkm",
-      "toChecklistId": "card_1770242668663_uu938ugjt",
-      "waypoints": [],
-      "fixedFromPoint": null,
-      "fixedToPoint": null,
-      "fixedToSide": "left",
-      "fixedFromSide": "right"
+      "fixedToPoint": null
     }
   ],
   "texts": [
     {
       "id": "card_1770241467923_021snhk2t",
-      "content": "",
-      "x": 129.77777777777771,
-      "y": -522.7777777777778,
-      "fontSize": 10,
+      "content": "Testando pra diacho",
+      "x": 237.49206349206338,
+      "y": -564.4920634920636,
+      "fontSize": 44,
       "color": "#ffffff",
-      "width": 200
+      "width": 536,
+      "height": 90
     }
   ],
   "columns": [
     {
       "id": "card_1770241473148_vxytgjvau",
       "title": "Nova Coluna",
-      "x": 862.6984126984125,
-      "y": -771.8253968253969,
+      "x": 1508.4126984126983,
+      "y": -1684.5396825396824,
       "width": 100,
-      "height": 404,
+      "height": 2032.9999999999995,
       "color": "#6c5ce7"
     }
   ],
@@ -196,7 +221,7 @@
     },
     {
       "id": 3,
-      "name": "Em Progresso",
+      "name": "Em ProgressoAAAAAAAAAAAAAAA",
       "color": "#f39c12"
     },
     {
@@ -206,5 +231,5 @@
     }
   ],
   "projectName": "teste",
-  "lastModified": "2026-02-04T22:45:38.982Z"
+  "lastModified": "2026-02-05T12:42:07.849Z"
 }

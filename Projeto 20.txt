@@ -1,0 +1,70 @@
+============================================================
+VISUALDOC - MAPA DO PROJETO
+============================================================
+Projeto: Projeto 20
+Última atualização: 05/02/2026, 09:50:17
+
+📊 ESTATÍSTICAS
+----------------------------------------
+• Total de Cards: 2
+• Total de Colunas: 1
+• Total de Textos: 1
+• Total de Conexões: 1
+• Total de Categorias: 4
+• Total de Checklists: 2
+• Checklists Concluídos: 2/2 (100%)
+
+🏷️ CATEGORIAS
+----------------------------------------
+  1. Geral (#6c5ce7)
+  2. Importante (#e74c3c)
+  3. Em ProgressoAAAAAAAAAAAAAAA (#f39c12)
+  4. Concluído (#27ae60)
+
+📁 COLUNAS
+----------------------------------------
+  [1] COLUNA
+      Título: Sem título
+      Cor: #6c5ce7
+      Posição: (2378, 8)
+      Tamanho: 300x200px
+
+
+📝 TEXTOS
+----------------------------------------
+  [1] TEXTO
+      Conteúdo: "Novo Texto"
+      Posição: (1934, 71)
+      Tamanho: 200x50px
+      Fonte: 16px
+      Cor: #ffffff
+
+
+📋 CARDS
+----------------------------------------
+  [1] CARD: Novo Card
+      ID: card_1770295389522_capft3c3q
+      Categorias: Geral
+      Cor: #6c5ce7
+      Posição: (1349, 49)
+      Tamanho: 427x208px
+      Progresso: 2/2 (100%)
+      Checklist:
+        [✓] Item 1 [Geral]
+        [✓] Item 2 [Importante]
+
+  [2] CARD: Novo Card
+      ID: card_1770295469744_2bl6oqjim
+      Categorias: Geral
+      Cor: #6c5ce7
+      Posição: (1817, 431)
+      Tamanho: 280x120px
+
+
+🔗 CONEXÕES
+----------------------------------------
+  1. "Novo Card" → "Novo Card"
+
+============================================================
+Gerado automaticamente pelo VisualDoc
+============================================================

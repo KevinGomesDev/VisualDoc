@@ -107,13 +107,15 @@
 
 .category-name-input {
   flex: 1;
-  min-width: 0;
-  padding: 8px 12px;
+  min-width: 150px;
+  padding: 4px 12px;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 4px;
   color: var(--text-primary);
   font-size: 0.9rem;
+  height: 28px;
+  box-sizing: border-box;
 }
 
 .category-name-input:focus {

@@ -1,0 +1,86 @@
+============================================================
+VISUALDOC - MAPA DO PROJETO
+============================================================
+Projeto: teste
+Última atualização: 05/02/2026, 09:42:59
+
+📊 ESTATÍSTICAS
+----------------------------------------
+• Total de Cards: 2
+• Total de Colunas: 1
+• Total de Textos: 1
+• Total de Conexões: 8
+• Total de Categorias: 4
+• Total de Checklists: 7
+• Checklists Concluídos: 1/7 (14%)
+
+🏷️ CATEGORIAS
+----------------------------------------
+  1. Geral (#6c5ce7)
+  2. Importante (#e74c3c)
+  3. Em ProgressoAAAAAAAAAAAAAAA (#f39c12)
+  4. Concluído (#27ae60)
+
+📁 COLUNAS
+----------------------------------------
+  [1] COLUNA
+      Título: Nova Coluna
+      Cor: #6c5ce7
+      Posição: (1508, -1685)
+      Tamanho: 100x2033px
+
+
+📝 TEXTOS
+----------------------------------------
+  [1] TEXTO
+      Conteúdo: "Testando pra diacho"
+      Posição: (237, -564)
+      Tamanho: 536x90px
+      Fonte: 44px
+      Cor: #ffffff
+
+
+📋 CARDS
+----------------------------------------
+  [1] CARD: Sei lá
+      ID: card_1770240862791_l7uy0qlxm
+      Categorias: Geral, Concluído, Em ProgressoAAAAAAAAAAAAAAA, Importante
+      Cor: #6c5ce7
+      Posição: (494, 52)
+      Tamanho: 551x362px
+      Descrição: Teste
+      Progresso: 0/2 (0%)
+      Checklist:
+        [ ] Teste [Concluído]
+        [ ] Teste 2 [Concluído]
+
+  [2] CARD: Card Número 1
+      ID: card_1770242668663_gd93drc4k
+      Categorias: Geral
+      Cor: #6c5ce7
+      Posição: (971, -365)
+      Tamanho: 485x319px
+      Descrição: Teste
+      Progresso: 1/5 (20%)
+      Checklist:
+        [✓] Item 1 [Em ProgressoAAAAAAAAAAAAAAA]
+        [ ] Item 5
+        [ ] Item 2 [Importante]
+        [ ] Item 3
+        [ ] Item 4
+
+
+🔗 CONEXÕES
+----------------------------------------
+  1. "Sei lá" → "null"
+  2. "Sei lá" → "null"
+  3. "Sei lá" → "null"
+  4. "Sei lá" → "null"
+  5. "Sei lá" → "null"
+  6. "Sei lá" → "null"
+  7. "card_1770242668663_gd93drc4k:card_1770294350008_bmdaj521g" → "card_1770240862791_l7uy0qlxm:card_1770241858884_hwer2n0qs"
+  8. "Sei lá" → "Card Número 1"
+
+============================================================
+Gerado automaticamente pelo VisualDoc
+============================================================

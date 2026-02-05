@@ -22,6 +22,7 @@ class VisualDocApp {
     this.isDraggingConnector = false;
     this.connectingFromCard = null;
     this.connectingFromChecklist = null;
+    this.connectingFromSide = null;
 
     // Estado de resize
     this.isResizing = false;
@@ -102,20 +103,21 @@ class VisualDocApp {
     this.checklistsContainer = document.getElementById("checklists-container");
     this.cardDetailsInput = document.getElementById("card-details");
     this.btnCloseModal = document.getElementById("btn-close-modal");
-    this.btnDeleteCard = document.getElementById("btn-delete-card");
     this.btnAddChecklist = document.getElementById("btn-add-checklist");
 
     // Categories Modal
     this.btnCategories = document.getElementById("btn-categories");
     this.categoriesModal = document.getElementById("categories-modal");
     this.btnCloseCategories = document.getElementById("btn-close-categories");
-    this.btnCloseCategoriesFooter = document.getElementById("btn-close-categories-footer");
+    this.btnCloseCategoriesFooter = document.getElementById(
+      "btn-close-categories-footer",
+    );
     this.newCategoryName = document.getElementById("new-category-name");
     this.newCategoryColor = document.getElementById("new-category-color");
     this.btnAddCategory = document.getElementById("btn-add-category");
     this.categoriesList = document.getElementById("categories-list");
 
-    // Context Menu
+    // Context Menu (Cards)
     this.contextMenu = document.getElementById("context-menu");
     this.ctxConnect = document.getElementById("ctx-connect");
     this.ctxDisconnect = document.getElementById("ctx-disconnect");
@@ -127,21 +129,48 @@ class VisualDocApp {
     this.ctxNewCard = document.getElementById("ctx-new-card");
     this.ctxNewText = document.getElementById("ctx-new-text");
     this.ctxNewColumn = document.getElementById("ctx-new-column");
+
+    // Text Context Menu
+    this.textContextMenu = document.getElementById("text-context-menu");
+    this.ctxTextDelete = document.getElementById("ctx-text-delete");
+
+    // Column Context Menu
+    this.columnContextMenu = document.getElementById("column-context-menu");
+    this.ctxColumnColor = document.getElementById("ctx-column-color");
+    this.ctxColumnDelete = document.getElementById("ctx-column-delete");
   }
 
   bindEvents() {
     // Toolbar events
-    this.btnExport.addEventListener("click", () => this.exportManager.exportSVG());
-    this.btnToggleTheme.addEventListener("click", () => this.themeManager.toggle());
-    this.btnNewProject.addEventListener("click", () => this.projectManager.newProject());
-    this.btnLoadProject.addEventListener("click", () => this.projectManager.loadProject());
-    this.btnSaveProject.addEventListener("click", () => this.projectManager.saveProjectAs());
-    this.btnCategories.addEventListener("click", () => this.categoryManager.openModal());
+    this.btnExport.addEventListener("click", () =>
+      this.exportManager.openTextMap(),
+    );
+    this.btnToggleTheme.addEventListener("click", () =>
+      this.themeManager.toggle(),
+    );
+    this.btnNewProject.addEventListener("click", () =>
+      this.projectManager.newProject(),
+    );
+    this.btnLoadProject.addEventListener("click", () =>
+      this.projectManager.loadProject(),
+    );
+    this.btnSaveProject.addEventListener("click", () =>
+      this.projectManager.saveProjectAs(),
+    );
+    this.btnCategories.addEventListener("click", () =>
+      this.categoryManager.openModal(),
+    );
 
     // Categories Modal events
-    this.btnCloseCategories.addEventListener("click", () => this.categoryManager.closeModal());
-    this.btnCloseCategoriesFooter.addEventListener("click", () => this.categoryManager.closeModal());
-    this.btnAddCategory.addEventListener("click", () => this.categoryManager.add());
+    this.btnCloseCategories.addEventListener("click", () =>
+      this.categoryManager.closeModal(),
+    );
+    this.btnCloseCategoriesFooter.addEventListener("click", () =>
+      this.categoryManager.closeModal(),
+    );
+    this.btnAddCategory.addEventListener("click", () =>
+      this.categoryManager.add(),
+    );
 
     // Modal events
     this.modalManager.bindEvents();
@@ -150,11 +179,17 @@ class VisualDocApp {
     this.contextMenuManager.bindEvents();
 
     // Canvas events
-    this.canvasContainer.addEventListener("mousedown", (e) => this.canvasManager.onMouseDown(e));
-    this.canvasContainer.addEventListener("contextmenu", (e) => this.canvasManager.onContextMenu(e));
+    this.canvasContainer.addEventListener("mousedown", (e) =>
+      this.canvasManager.onMouseDown(e),
+    );
+    this.canvasContainer.addEventListener("contextmenu", (e) =>
+      this.canvasManager.onContextMenu(e),
+    );
     document.addEventListener("mousemove", (e) => this.onMouseMove(e));
     document.addEventListener("mouseup", (e) => this.onMouseUp(e));
-    this.canvasContainer.addEventListener("wheel", (e) => this.canvasManager.onWheel(e));
+    this.canvasContainer.addEventListener("wheel", (e) =>
+      this.canvasManager.onWheel(e),
+    );
 
     // Keyboard events
     document.addEventListener("keydown", (e) => this.onKeyDown(e));
@@ -224,7 +259,11 @@ class VisualDocApp {
 
   onMouseMove(e) {
     // Linha temporária de conexão
-    if (this.isDraggingConnector && this.isConnecting && this.connectingFromCard) {
+    if (
+      this.isDraggingConnector &&
+      this.isConnecting &&
+      this.connectingFromCard
+    ) {
       this.updateTempConnectionLine(e);
     }
 
@@ -251,7 +290,9 @@ class VisualDocApp {
   onMouseUp(e) {
     // Finaliza resize
     if (this.isResizing && this.resizingCardId) {
-      const cardElement = document.getElementById(`card-${this.resizingCardId}`);
+      const cardElement = document.getElementById(
+        `card-${this.resizingCardId}`,
+      );
       if (cardElement) {
         cardElement.classList.remove("resizing");
       }
@@ -281,7 +322,9 @@ class VisualDocApp {
     if (e.target.tagName === "INPUT") return;
     if (e.button === 2) return;
 
-    const isEditingText = e.target.contentEditable === "true" && document.activeElement === e.target;
+    const isEditingText =
+      e.target.contentEditable === "true" &&
+      document.activeElement === e.target;
     if (isEditingText) return;
 
     e.preventDefault();
@@ -321,24 +364,25 @@ class VisualDocApp {
     e.preventDefault();
     e.stopPropagation();
     this.selectionManager.select(itemId, itemType);
-    this.contextMenuManager.showItemMenu(e.clientX, e.clientY);
+    this.contextMenuManager.showItemMenu(e.clientX, e.clientY, itemType);
   }
 
   onCardContextMenu(e, cardId) {
     e.preventDefault();
     this.selectedCardId = cardId;
-    this.contextMenuManager.showItemMenu(e.clientX, e.clientY);
+    this.contextMenuManager.showItemMenu(e.clientX, e.clientY, "card");
   }
 
   // ==========================================
   // Connection Events
   // ==========================================
 
-  onConnectorMouseDown(e, cardId) {
+  onConnectorMouseDown(e, cardId, side) {
     e.preventDefault();
     e.stopPropagation();
     this.isDraggingConnector = true;
     this.connectingFromChecklist = null;
+    this.connectingFromSide = side;
     this.startConnectingFrom(cardId);
   }
 
@@ -360,7 +404,9 @@ class VisualDocApp {
     if (cardElement) {
       cardElement.classList.add("connecting");
       if (checklistId) {
-        const checklistItem = cardElement.querySelector(`[data-checklist-id="${checklistId}"]`);
+        const checklistItem = cardElement.querySelector(
+          `[data-checklist-id="${checklistId}"]`,
+        );
         if (checklistItem) {
           checklistItem.classList.add("connecting");
         }
@@ -374,16 +420,21 @@ class VisualDocApp {
     this.removeTempConnectionLine();
 
     if (this.connectingFromCard) {
-      const cardElement = document.getElementById(`card-${this.connectingFromCard}`);
+      const cardElement = document.getElementById(
+        `card-${this.connectingFromCard}`,
+      );
       if (cardElement) {
         cardElement.classList.remove("connecting");
-        cardElement.querySelectorAll(".card-checklist-item.connecting").forEach((item) => {
-          item.classList.remove("connecting");
-        });
+        cardElement
+          .querySelectorAll(".card-checklist-item.connecting")
+          .forEach((item) => {
+            item.classList.remove("connecting");
+          });
       }
     }
     this.connectingFromCard = null;
     this.connectingFromChecklist = null;
+    this.connectingFromSide = null;
   }
 
   finishConnectionDrag(e) {
@@ -394,7 +445,10 @@ class VisualDocApp {
     let cardElement = null;
 
     for (const el of elements) {
-      if (!checklistConnector && el.classList?.contains("checklist-connector")) {
+      if (
+        !checklistConnector &&
+        el.classList?.contains("checklist-connector")
+      ) {
         checklistConnector = el;
       }
       if (!cardConnector && el.classList?.contains("card-connector")) {
@@ -410,56 +464,118 @@ class VisualDocApp {
       const targetCardId = checklistConnector.dataset.cardId;
 
       if (targetCardId && targetChecklistId) {
-        if (!(targetCardId === this.connectingFromCard && targetChecklistId === this.connectingFromChecklist)) {
-          this.addConnection(this.connectingFromCard, targetCardId, this.connectingFromChecklist, targetChecklistId);
+        if (
+          !(
+            targetCardId === this.connectingFromCard &&
+            targetChecklistId === this.connectingFromChecklist
+          )
+        ) {
+          this.addConnection(
+            this.connectingFromCard,
+            targetCardId,
+            this.connectingFromChecklist,
+            targetChecklistId,
+          );
         }
       }
     } else if (cardConnector) {
       const targetCardId = cardConnector.dataset.cardId;
       if (targetCardId && targetCardId !== this.connectingFromCard) {
-        this.addConnection(this.connectingFromCard, targetCardId, this.connectingFromChecklist, null);
+        this.addConnection(
+          this.connectingFromCard,
+          targetCardId,
+          this.connectingFromChecklist,
+          null,
+        );
       }
     } else if (cardElement) {
       const targetCardId = cardElement.id.replace("card-", "");
-      if (targetCardId !== this.connectingFromCard || this.connectingFromChecklist) {
-        this.addConnection(this.connectingFromCard, targetCardId, this.connectingFromChecklist, null);
+      if (
+        targetCardId !== this.connectingFromCard ||
+        this.connectingFromChecklist
+      ) {
+        this.addConnection(
+          this.connectingFromCard,
+          targetCardId,
+          this.connectingFromChecklist,
+          null,
+        );
       }
     }
-    
+
     this.cancelConnecting();
     this.isDraggingConnector = false;
   }
 
   updateTempConnectionLine(e) {
-    const cardElement = document.getElementById(`card-${this.connectingFromCard}`);
+    const cardElement = document.getElementById(
+      `card-${this.connectingFromCard}`,
+    );
     if (!cardElement) return;
 
     const card = this.cards.find((c) => c.id === this.connectingFromCard);
     if (!card) return;
 
     let fromX, fromY;
+    const cardWidth = cardElement.offsetWidth || 280;
+    const cardHeight = cardElement.offsetHeight || 100;
 
     if (this.connectingFromChecklist) {
-      const checklistItem = cardElement.querySelector(`[data-checklist-id="${this.connectingFromChecklist}"]`);
+      const checklistItem = cardElement.querySelector(
+        `[data-checklist-id="${this.connectingFromChecklist}"]`,
+      );
       if (checklistItem) {
         const connector = checklistItem.querySelector(".checklist-connector");
         if (connector) {
           const cardRect = cardElement.getBoundingClientRect();
           const connRect = connector.getBoundingClientRect();
-          fromX = card.x + (connRect.left - cardRect.left + connRect.width / 2) / this.canvasManager.zoom;
-          fromY = card.y + (connRect.top - cardRect.top + connRect.height / 2) / this.canvasManager.zoom;
+          fromX =
+            card.x +
+            (connRect.left - cardRect.left + connRect.width / 2) /
+              this.canvasManager.zoom;
+          fromY =
+            card.y +
+            (connRect.top - cardRect.top + connRect.height / 2) /
+              this.canvasManager.zoom;
         }
+      }
+    } else if (this.connectingFromSide) {
+      // Usa a posição da bolinha clicada
+      switch (this.connectingFromSide) {
+        case "top":
+          fromX = card.x + cardWidth / 2;
+          fromY = card.y;
+          break;
+        case "bottom":
+          fromX = card.x + cardWidth / 2;
+          fromY = card.y + cardHeight;
+          break;
+        case "left":
+          fromX = card.x;
+          fromY = card.y + cardHeight / 2;
+          break;
+        case "right":
+          fromX = card.x + cardWidth;
+          fromY = card.y + cardHeight / 2;
+          break;
+        default:
+          fromX = card.x + cardWidth / 2;
+          fromY = card.y + cardHeight / 2;
       }
     }
 
     if (fromX === undefined) {
-      fromX = card.x + (cardElement.offsetWidth || 280) / 2;
-      fromY = card.y + (cardElement.offsetHeight || 100) / 2;
+      fromX = card.x + cardWidth / 2;
+      fromY = card.y + cardHeight / 2;
     }
 
     const canvasRect = this.canvasContainer.getBoundingClientRect();
-    const toX = (e.clientX - canvasRect.left - this.canvasManager.pan.x) / this.canvasManager.zoom;
-    const toY = (e.clientY - canvasRect.top - this.canvasManager.pan.y) / this.canvasManager.zoom;
+    const toX =
+      (e.clientX - canvasRect.left - this.canvasManager.pan.x) /
+      this.canvasManager.zoom;
+    const toY =
+      (e.clientY - canvasRect.top - this.canvasManager.pan.y) /
+      this.canvasManager.zoom;
 
     let tempLine = this.connectionsLayer.querySelector(".temp-connection-line");
     if (!tempLine) {
@@ -489,7 +605,9 @@ class VisualDocApp {
   }
 
   removeTempConnectionLine() {
-    const tempLine = this.connectionsLayer?.querySelector(".temp-connection-line");
+    const tempLine = this.connectionsLayer?.querySelector(
+      ".temp-connection-line",
+    );
     if (tempLine) tempLine.remove();
   }
 
@@ -522,8 +640,10 @@ class VisualDocApp {
     const cardElement = document.getElementById(`card-${this.resizingCardId}`);
 
     if (card && cardElement) {
-      const deltaX = (e.clientX - this.resizeStart.mouseX) / this.canvasManager.zoom;
-      const deltaY = (e.clientY - this.resizeStart.mouseY) / this.canvasManager.zoom;
+      const deltaX =
+        (e.clientX - this.resizeStart.mouseX) / this.canvasManager.zoom;
+      const deltaY =
+        (e.clientY - this.resizeStart.mouseY) / this.canvasManager.zoom;
 
       const newWidth = Math.max(200, this.resizeStart.width + deltaX);
       const newHeight = Math.max(100, this.resizeStart.height + deltaY);
@@ -541,12 +661,21 @@ class VisualDocApp {
   // Connection Management
   // ==========================================
 
-  addConnection(fromCardId, toCardId, fromChecklistId = null, toChecklistId = null) {
-    const fromId = fromChecklistId ? `${fromCardId}:${fromChecklistId}` : fromCardId;
+  addConnection(
+    fromCardId,
+    toCardId,
+    fromChecklistId = null,
+    toChecklistId = null,
+  ) {
+    const fromId = fromChecklistId
+      ? `${fromCardId}:${fromChecklistId}`
+      : fromCardId;
     const toId = toChecklistId ? `${toCardId}:${toChecklistId}` : toCardId;
 
     const exists = this.connections.some(
-      (conn) => (conn.from === fromId && conn.to === toId) || (conn.from === toId && conn.to === fromId)
+      (conn) =>
+        (conn.from === fromId && conn.to === toId) ||
+        (conn.from === toId && conn.to === fromId),
     );
 
     if (!exists && fromId !== toId) {
@@ -569,7 +698,9 @@ class VisualDocApp {
 
   removeConnection(fromId, toId) {
     this.connections = this.connections.filter(
-      (conn) => !(conn.from === fromId && conn.to === toId) && !(conn.from === toId && conn.to === fromId)
+      (conn) =>
+        !(conn.from === fromId && conn.to === toId) &&
+        !(conn.from === toId && conn.to === fromId),
     );
     this.renderConnections();
     this.saveData();
@@ -577,7 +708,7 @@ class VisualDocApp {
 
   removeAllConnectionsFromCard(cardId) {
     this.connections = this.connections.filter(
-      (conn) => conn.fromCardId !== cardId && conn.toCardId !== cardId
+      (conn) => conn.fromCardId !== cardId && conn.toCardId !== cardId,
     );
     this.renderConnections();
     this.saveData();
@@ -695,8 +826,11 @@ class VisualDocApp {
   }
 
   getCardCategories(card) {
-    const categoryIds = card.categoryIds || (card.categoryId ? [card.categoryId] : []);
-    return categoryIds.map((id) => this.categories.find((c) => c.id === id)).filter(Boolean);
+    const categoryIds =
+      card.categoryIds || (card.categoryId ? [card.categoryId] : []);
+    return categoryIds
+      .map((id) => this.categories.find((c) => c.id === id))
+      .filter(Boolean);
   }
 
   getCardPrimaryColor(card) {

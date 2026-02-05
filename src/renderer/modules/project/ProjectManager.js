@@ -8,6 +8,14 @@ class ProjectManager {
     this.currentProjectPath = null;
     this.projectName = null;
     this.saveTimeout = null;
+    this.projectNameDisplay = document.getElementById("project-name-display");
+  }
+
+  // Atualiza o display do nome do projeto na interface
+  updateProjectDisplay() {
+    if (this.projectNameDisplay) {
+      this.projectNameDisplay.textContent = this.projectName || "Sem projeto";
+    }
   }
 
   // Verifica ou cria projeto
@@ -16,6 +24,7 @@ class ProjectManager {
 
     if (projectName) {
       this.projectName = projectName;
+      this.updateProjectDisplay();
       await this.loadData();
       return;
     }
@@ -97,6 +106,7 @@ class ProjectManager {
         const safeName = name.replace(/[<>:"/\\|?*]/g, "-");
         await window.electronAPI.setProjectName(safeName);
         this.projectName = safeName;
+        this.updateProjectDisplay();
         await this.loadData();
         modalOverlay.remove();
         resolve();
@@ -112,6 +122,7 @@ class ProjectManager {
           const name = btn.dataset.name;
           await window.electronAPI.setProjectName(name);
           this.projectName = name;
+          this.updateProjectDisplay();
           await this.loadData();
           modalOverlay.remove();
           resolve();
@@ -127,6 +138,7 @@ class ProjectManager {
             this.app.categories = result.data.categories;
           }
           this.projectName = result.projectName;
+          this.updateProjectDisplay();
           this.currentProjectPath = result.filePath;
           modalOverlay.remove();
           resolve();
@@ -197,6 +209,9 @@ class ProjectManager {
 
         await window.electronAPI.saveData(data);
 
+        // Salva o mapa em TXT automaticamente
+        await this.app.exportManager.saveTextMap();
+
         this.app.saveStatus.textContent = "✓ Salvo";
         this.app.saveStatus.classList.remove("saving");
       } catch (error) {
@@ -261,6 +276,7 @@ class ProjectManager {
     const safeName = name.replace(/[<>:"/\\|?*]/g, "-");
     await window.electronAPI.setProjectName(safeName);
     this.projectName = safeName;
+    this.updateProjectDisplay();
 
     this.app.cards = [];
     this.app.connections = [];
@@ -357,6 +373,7 @@ class ProjectManager {
         }
         this.currentProjectPath = result.filePath;
         this.projectName = result.projectName;
+        this.updateProjectDisplay();
 
         this.app.historyManager.init({
           cards: this.app.cards,

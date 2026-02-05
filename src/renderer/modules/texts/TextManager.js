@@ -1,6 +1,6 @@
-// ==========================================
+// ====================================================================================
 // TextManager - Gerenciamento de Textos no Canvas
-// ==========================================
+// ====================================================================================
 
 class TextManager {
   constructor(app) {
@@ -64,6 +64,7 @@ class TextManager {
     textElement.style.fontSize = `${text.fontSize || 16}px`;
     textElement.style.color = text.color || "#ffffff";
     if (text.width) textElement.style.width = `${text.width}px`;
+    if (text.height) textElement.style.height = `${text.height}px`;
     textElement.contentEditable = "false";
     textElement.textContent = text.content || "Novo Texto";
 
@@ -124,14 +125,16 @@ class TextManager {
       this.app.onItemContextMenu(e, text.id, "text"),
     );
 
-    // Resize handle para font size
+    // Resize handle para tamanho (width/height como cards e colunas)
     resizeHandle.addEventListener("mousedown", (e) => {
       e.stopPropagation();
       this.app.isResizing = true;
       this.app.resizingCardId = text.id;
       this.app.resizingItemType = "text";
       this.app.resizeStart = {
-        fontSize: text.fontSize || 16,
+        width: text.width || 200,
+        height: text.height || textElement.offsetHeight,
+        mouseX: e.clientX,
         mouseY: e.clientY,
       };
     });
@@ -155,7 +158,7 @@ class TextManager {
     this.app.texts.forEach((text) => this.render(text));
   }
 
-  // Atualiza o resize durante o arraste
+  // Atualiza o resize durante o arraste (width/height como cards e colunas)
   handleResize(e) {
     const text = this.app.texts.find((t) => t.id === this.app.resizingCardId);
     const textElement = document.getElementById(
@@ -163,13 +166,14 @@ class TextManager {
     );
 
     if (text && textElement) {
+      const deltaX = (e.clientX - this.app.resizeStart.mouseX) / this.app.zoom;
       const deltaY = (e.clientY - this.app.resizeStart.mouseY) / this.app.zoom;
-      const newFontSize = Math.max(
-        6,
-        this.app.resizeStart.fontSize + deltaY * 0.5,
-      );
-      text.fontSize = newFontSize;
-      textElement.style.fontSize = `${newFontSize}px`;
+      const newWidth = Math.max(50, this.app.resizeStart.width + deltaX);
+      const newHeight = Math.max(20, this.app.resizeStart.height + deltaY);
+      text.width = newWidth;
+      text.height = newHeight;
+      textElement.style.width = `${newWidth}px`;
+      textElement.style.height = `${newHeight}px`;
     }
   }
 }

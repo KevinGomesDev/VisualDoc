@@ -52,12 +52,17 @@ class ConnectionManager {
 
   select(index) {
     this.selectedIndex = index;
-    this.app.clearSelection();
+    this.app.selectedConnectionIndex = index;
+    // Limpa seleção de itens mas mantém a conexão selecionada
+    if (this.app.selectionManager) {
+      this.app.selectionManager.clear(true);
+    }
     this.render();
   }
 
   deselect() {
     this.selectedIndex = null;
+    this.app.selectedConnectionIndex = null;
     this.render();
   }
 

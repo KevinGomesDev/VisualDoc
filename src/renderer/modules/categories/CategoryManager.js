@@ -62,12 +62,19 @@ class CategoryManager {
     });
   }
 
-  // Atualiza cards que usam uma categoria
+  // Atualiza cards que usam uma categoria (no card ou em checklists)
   updateCardsWithCategory(categoryId) {
     this.app.cards.forEach((card) => {
-      const ids =
+      const cardIds =
         card.categoryIds || (card.categoryId ? [card.categoryId] : []);
-      if (ids.includes(categoryId)) {
+
+      // Verifica se o card ou algum checklist usa essa categoria
+      const cardUsesCategory = cardIds.includes(categoryId);
+      const checklistUsesCategory = card.checklists?.some(
+        (checklist) => String(checklist.categoryId) === String(categoryId),
+      );
+
+      if (cardUsesCategory || checklistUsesCategory) {
         card.color = this.app.getCardPrimaryColor(card);
         card.category =
           this.app.categories.find((c) => c.id === card.categoryId)?.name ||
