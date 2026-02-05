@@ -5,46 +5,90 @@
 /* Safe area for notched devices */
 @supports (padding: env(safe-area-inset-top)) {
   .toolbar {
-    padding-top: calc(12px + env(safe-area-inset-top));
-    padding-left: calc(20px + env(safe-area-inset-left));
-    padding-right: calc(20px + env(safe-area-inset-right));
+    padding-top: calc(8px + env(safe-area-inset-top));
+    padding-left: calc(12px + env(safe-area-inset-left));
+    padding-right: calc(12px + env(safe-area-inset-right));
   }
 }
 
+/* ==========================================
+   Mobile Header - Redesign Compacto
+   ========================================== */
+
 /* Mobile styles */
 @media (max-width: 768px) {
+  /* Toolbar principal - linha única */
   .toolbar {
-    flex-wrap: wrap;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
     gap: 8px;
     padding: 8px 12px;
     height: auto;
+    min-height: 52px;
   }
 
+  /* Brand - compacto */
   .toolbar-brand {
-    min-width: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .brand-logo {
+    width: 32px;
+    height: 32px;
   }
 
   .brand-info h1 {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .project-subtitle {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
+    max-width: 80px;
   }
 
+  /* Actions - horizontal scrollable */
   .toolbar-actions {
-    width: 100%;
-    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 4px 0;
   }
 
+  .toolbar-actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Action groups - compactos */
   .action-group {
+    display: flex;
+    align-items: center;
     gap: 2px;
-    padding: 2px;
+    padding: 2px 4px;
+    flex-shrink: 0;
+    background: var(--bg-primary);
+    border-radius: 8px;
   }
 
+  /* Botões toolbar - apenas ícones */
   .btn-toolbar {
-    padding: 6px 10px;
-    font-size: 0.75rem;
+    padding: 8px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 6px;
+  }
+
+  .btn-toolbar svg {
+    width: 18px;
+    height: 18px;
   }
 
   .btn-label {
@@ -55,8 +99,32 @@
     display: none;
   }
 
+  /* Status - compacto */
   .toolbar-status {
-    min-width: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .save-indicator {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    gap: 4px;
+  }
+
+  .save-indicator .save-text {
+    display: none;
+  }
+
+  .save-indicator .save-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn-icon-only {
+    width: 36px;
+    height: 36px;
   }
 
   /* Cards */
@@ -119,35 +187,53 @@
   }
 }
 
-/* Extra small devices */
+/* Extra small devices - Smartphones */
 @media (max-width: 480px) {
+  .toolbar {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
   .toolbar-brand {
-    flex: 1;
+    gap: 6px;
   }
 
   .brand-logo {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .brand-logo svg {
+    width: 18px;
+    height: 18px;
   }
 
   .brand-info h1 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .project-subtitle {
+    display: none;
   }
 
   .action-group {
-    flex-direction: column;
-    gap: 4px;
+    padding: 2px;
   }
 
   .btn-toolbar {
-    padding: 6px 8px;
-    font-size: 0.7rem;
-    width: 100%;
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .btn-toolbar svg {
+    width: 16px;
+    height: 16px;
   }
 
   .save-indicator {
-    padding: 4px 8px;
-    font-size: 0.7rem;
+    padding: 4px 6px;
+    border-radius: 12px;
   }
 
   .btn-icon-only {
@@ -155,6 +241,12 @@
     height: 32px;
   }
 
+  .btn-icon-only svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Modal fullscreen em smartphones */
   .modal-content {
     width: 100% !important;
     max-width: 100% !important;
@@ -180,6 +272,15 @@
 
   .checklist-category-select {
     flex: 1;
+  }
+
+  /* Project selection modal - mobile optimized */
+  .project-selection-modal .modal-content {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  .project-selection-modal .existing-projects {
+    max-height: 40vh;
   }
 }
 
@@ -219,16 +320,35 @@
     height: 20px;
     opacity: 1;
   }
+
+  /* Melhor feedback visual para touch */
+  .btn-toolbar:active {
+    background: var(--accent-primary);
+    color: white;
+    transform: scale(0.95);
+  }
+
+  .action-group .btn-toolbar:active svg {
+    opacity: 1;
+  }
 }
 
 /* Landscape mobile */
 @media (max-height: 500px) and (orientation: landscape) {
   .toolbar {
-    padding: 6px 12px;
+    padding: 4px 12px;
+    min-height: 44px;
   }
 
-  .toolbar .btn {
-    padding: 6px 10px;
+  .brand-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .btn-toolbar {
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
   }
 
   .modal-content {

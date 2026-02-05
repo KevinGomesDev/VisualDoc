@@ -11,6 +11,294 @@ class CanvasManager {
     this.panStart = { x: 0, y: 0 };
     this.isDragging = false;
     this.dragOffsets = {};
+
+    // Touch state
+    this.isTouchPanning = false;
+    this.touchPanStart = { x: 0, y: 0 };
+    this.lastPinchDistance = 0;
+    this.isPinching = false;
+    this.touchDragItem = null;
+    this.touchDragStartPos = null;
+    this.touchMoved = false;
+  }
+
+  // Inicializa eventos touch (chamado após bindElements)
+  initTouchEvents() {
+    const canvas = this.app.canvasContainer;
+    if (!canvas) return;
+
+    // Touch Start
+    canvas.addEventListener("touchstart", (e) => this.onTouchStart(e), {
+      passive: false,
+    });
+
+    // Touch Move - no document para capturar movimentos fora do canvas
+    document.addEventListener("touchmove", (e) => this.onTouchMove(e), {
+      passive: false,
+    });
+
+    // Touch End
+    document.addEventListener("touchend", (e) => this.onTouchEnd(e), {
+      passive: false,
+    });
+    document.addEventListener("touchcancel", (e) => this.onTouchEnd(e), {
+      passive: false,
+    });
+
+    // Previne zoom do navegador
+    canvas.addEventListener("gesturestart", (e) => e.preventDefault(), {
+      passive: false,
+    });
+    canvas.addEventListener("gesturechange", (e) => e.preventDefault(), {
+      passive: false,
+    });
+    canvas.addEventListener("gestureend", (e) => e.preventDefault(), {
+      passive: false,
+    });
+  }
+
+  // Touch Start Handler
+  onTouchStart(e) {
+    // Ignora inputs
+    if (this.isInputElement(e.target)) return;
+
+    const touches = e.touches;
+
+    // Fecha menus de contexto
+    this.app.contextMenuManager.hideAll();
+
+    // 2 dedos = Pinch Zoom
+    if (touches.length === 2) {
+      e.preventDefault();
+      this.isPinching = true;
+      this.isTouchPanning = false;
+      this.lastPinchDistance = this.getDistance(touches[0], touches[1]);
+      return;
+    }
+
+    // 1 dedo
+    if (touches.length === 1) {
+      const touch = touches[0];
+      const target = touch.target;
+
+      this.touchMoved = false;
+
+      // Verifica se tocou em um card, texto ou coluna
+      const cardEl = target.closest(".card");
+      const textEl = target.closest(".text-element");
+      const columnEl = target.closest(".column-element");
+
+      if (cardEl || textEl || columnEl) {
+        e.preventDefault();
+
+        let itemId, itemType, item;
+
+        if (cardEl) {
+          itemId = cardEl.id.replace("card-", "");
+          itemType = "card";
+          item = this.app.cards.find((c) => c.id === itemId);
+        } else if (textEl) {
+          itemId = textEl.id.replace("text-", "");
+          itemType = "text";
+          item = this.app.texts.find((t) => t.id === itemId);
+        } else if (columnEl) {
+          itemId = columnEl.id.replace("column-", "");
+          itemType = "column";
+          item = this.app.columns.find((c) => c.id === itemId);
+        }
+
+        if (item) {
+          // Seleciona o item se não estiver selecionado
+          if (!this.app.selectionManager.isSelected(itemId, itemType)) {
+            this.app.selectionManager.clear();
+            this.app.selectionManager.select(itemId, itemType);
+          }
+
+          // Prepara para drag
+          this.touchDragItem = { id: itemId, type: itemType, item };
+          this.touchDragStartPos = {
+            x: touch.clientX,
+            y: touch.clientY,
+            itemX: item.x,
+            itemY: item.y,
+          };
+        }
+      } else {
+        // Tocou no fundo - inicia pan
+        e.preventDefault();
+        this.isTouchPanning = true;
+        this.touchPanStart = {
+          x: touch.clientX - this.pan.x,
+          y: touch.clientY - this.pan.y,
+        };
+
+        // Limpa seleção
+        this.app.selectionManager.clear();
+      }
+    }
+  }
+
+  // Touch Move Handler
+  onTouchMove(e) {
+    const touches = e.touches;
+
+    // Ignora inputs
+    if (this.isInputElement(e.target)) return;
+
+    // Pinch Zoom com 2 dedos
+    if (touches.length === 2 && this.isPinching) {
+      e.preventDefault();
+
+      const newDistance = this.getDistance(touches[0], touches[1]);
+      const center = this.getCenter(touches[0], touches[1]);
+
+      // Calcula o fator de zoom
+      const scale = newDistance / this.lastPinchDistance;
+      const newZoom = Math.max(0.2, Math.min(3, this.zoom * scale));
+
+      // Zoom centralizado no ponto de pinch
+      const canvasRect = this.app.canvasContainer.getBoundingClientRect();
+      const centerX = center.x - canvasRect.left;
+      const centerY = center.y - canvasRect.top;
+
+      // Ajusta pan para manter o centro
+      const zoomDelta = newZoom / this.zoom;
+      this.pan.x = centerX - (centerX - this.pan.x) * zoomDelta;
+      this.pan.y = centerY - (centerY - this.pan.y) * zoomDelta;
+
+      this.zoom = newZoom;
+      this.lastPinchDistance = newDistance;
+      this.applyTransform();
+      return;
+    }
+
+    // 1 dedo
+    if (touches.length === 1) {
+      const touch = touches[0];
+
+      // Pan do canvas
+      if (this.isTouchPanning) {
+        e.preventDefault();
+        this.pan.x = touch.clientX - this.touchPanStart.x;
+        this.pan.y = touch.clientY - this.touchPanStart.y;
+        this.applyTransform();
+        return;
+      }
+
+      // Drag de item
+      if (this.touchDragItem && this.touchDragStartPos) {
+        e.preventDefault();
+
+        const dx = touch.clientX - this.touchDragStartPos.x;
+        const dy = touch.clientY - this.touchDragStartPos.y;
+
+        // Só começa o drag se moveu mais de 5px (evita toques acidentais)
+        if (!this.touchMoved && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+          this.touchMoved = true;
+          this.isDragging = true;
+
+          // Adiciona classe de dragging
+          const prefix =
+            this.touchDragItem.type === "card"
+              ? "card"
+              : this.touchDragItem.type === "text"
+                ? "text"
+                : "column";
+          const el = document.getElementById(
+            `${prefix}-${this.touchDragItem.id}`,
+          );
+          if (el) el.classList.add("dragging");
+        }
+
+        if (this.touchMoved) {
+          // Atualiza posição do item
+          const item = this.touchDragItem.item;
+          item.x = this.touchDragStartPos.itemX + dx / this.zoom;
+          item.y = this.touchDragStartPos.itemY + dy / this.zoom;
+
+          const prefix =
+            this.touchDragItem.type === "card"
+              ? "card"
+              : this.touchDragItem.type === "text"
+                ? "text"
+                : "column";
+          const element = document.getElementById(
+            `${prefix}-${this.touchDragItem.id}`,
+          );
+          if (element) {
+            element.style.left = `${item.x}px`;
+            element.style.top = `${item.y}px`;
+          }
+
+          this.app.renderConnections();
+        }
+      }
+    }
+  }
+
+  // Touch End Handler
+  onTouchEnd(e) {
+    // Ignora inputs
+    if (this.isInputElement(e.target)) return;
+
+    // Finaliza pinch
+    if (this.isPinching) {
+      this.isPinching = false;
+      this.lastPinchDistance = 0;
+    }
+
+    // Finaliza pan
+    if (this.isTouchPanning) {
+      this.isTouchPanning = false;
+    }
+
+    // Finaliza drag de item
+    if (this.touchDragItem) {
+      if (this.touchMoved) {
+        // Remove classe de dragging
+        const prefix =
+          this.touchDragItem.type === "card"
+            ? "card"
+            : this.touchDragItem.type === "text"
+              ? "text"
+              : "column";
+        const el = document.getElementById(
+          `${prefix}-${this.touchDragItem.id}`,
+        );
+        if (el) el.classList.remove("dragging");
+
+        // Salva
+        this.app.saveData();
+      }
+
+      this.touchDragItem = null;
+      this.touchDragStartPos = null;
+      this.touchMoved = false;
+      this.isDragging = false;
+    }
+  }
+
+  // Helpers
+  isInputElement(target) {
+    return (
+      target.tagName === "INPUT" ||
+      target.tagName === "TEXTAREA" ||
+      target.tagName === "SELECT" ||
+      target.isContentEditable
+    );
+  }
+
+  getDistance(touch1, touch2) {
+    const dx = touch1.clientX - touch2.clientX;
+    const dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  getCenter(touch1, touch2) {
+    return {
+      x: (touch1.clientX + touch2.clientX) / 2,
+      y: (touch1.clientY + touch2.clientY) / 2,
+    };
   }
 
   // Mouse down no canvas

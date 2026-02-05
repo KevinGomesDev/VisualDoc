@@ -20,7 +20,7 @@ class ProjectManager {
 
   // Verifica ou cria projeto
   async checkOrCreate() {
-    const projectName = await window.electronAPI.getProjectName();
+    const projectName = await window.platformAPI.getProjectName();
 
     if (projectName) {
       this.projectName = projectName;
@@ -29,7 +29,7 @@ class ProjectManager {
       return;
     }
 
-    const result = await window.electronAPI.listProjects();
+    const result = await window.platformAPI.listProjects();
     const existingProjects = result.projects || [];
     await this.showSelectionModal(existingProjects);
   }
@@ -104,7 +104,7 @@ class ProjectManager {
         }
 
         const safeName = name.replace(/[<>:"/\\|?*]/g, "-");
-        await window.electronAPI.setProjectName(safeName);
+        await window.platformAPI.setProjectName(safeName);
         this.projectName = safeName;
         this.updateProjectDisplay();
         await this.loadData();
@@ -120,7 +120,7 @@ class ProjectManager {
       modalOverlay.querySelectorAll(".existing-project-btn").forEach((btn) => {
         btn.addEventListener("click", async () => {
           const name = btn.dataset.name;
-          await window.electronAPI.setProjectName(name);
+          await window.platformAPI.setProjectName(name);
           this.projectName = name;
           this.updateProjectDisplay();
           await this.loadData();
@@ -130,7 +130,7 @@ class ProjectManager {
       });
 
       loadOtherBtn.addEventListener("click", async () => {
-        const result = await window.electronAPI.loadProject();
+        const result = await window.platformAPI.loadProject();
         if (result.success && result.data) {
           this.app.cards = result.data.cards || [];
           this.app.connections = result.data.connections || [];
@@ -150,7 +150,7 @@ class ProjectManager {
   // Carrega dados do projeto
   async loadData() {
     try {
-      const result = await window.electronAPI.loadData();
+      const result = await window.platformAPI.loadData();
       if (result.success && result.data) {
         this.app.cards = result.data.cards || [];
         this.app.connections = result.data.connections || [];
@@ -207,7 +207,7 @@ class ProjectManager {
           lastModified: new Date().toISOString(),
         };
 
-        await window.electronAPI.saveData(data);
+        await window.platformAPI.saveData(data);
 
         // Salva o mapa em TXT automaticamente
         await this.app.exportManager.saveTextMap();
@@ -253,7 +253,7 @@ class ProjectManager {
           lastModified: new Date().toISOString(),
         };
 
-        await window.electronAPI.saveData(data);
+        await window.platformAPI.saveData(data);
 
         this.app.saveStatus.textContent = "✓ Salvo";
         this.app.saveStatus.classList.remove("saving");
@@ -274,7 +274,7 @@ class ProjectManager {
     if (!name) return;
 
     const safeName = name.replace(/[<>:"/\\|?*]/g, "-");
-    await window.electronAPI.setProjectName(safeName);
+    await window.platformAPI.setProjectName(safeName);
     this.projectName = safeName;
     this.updateProjectDisplay();
 
@@ -362,7 +362,7 @@ class ProjectManager {
   // Carregar projeto
   async loadProject() {
     try {
-      const result = await window.electronAPI.loadProject();
+      const result = await window.platformAPI.loadProject();
       if (result.success && result.data) {
         this.app.cards = result.data.cards || [];
         this.app.connections = result.data.connections || [];
@@ -403,7 +403,7 @@ class ProjectManager {
         lastModified: new Date().toISOString(),
       };
 
-      const result = await window.electronAPI.saveProjectAs(data);
+      const result = await window.platformAPI.saveProjectAs(data);
       if (result.success) {
         this.currentProjectPath = result.filePath;
         this.app.saveStatus.textContent = "✓ Projeto salvo";

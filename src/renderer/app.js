@@ -56,6 +56,7 @@ class VisualDocApp {
     this.bindElements();
     this.initManagers();
     this.bindEvents();
+    this.initTouchSupport();
     this.themeManager.load();
 
     await this.projectManager.checkOrCreate();
@@ -77,6 +78,17 @@ class VisualDocApp {
     this.canvasManager = new CanvasManager(this);
     this.exportManager = new ExportManager(this);
     this.themeManager = new ThemeManager(this);
+  }
+
+  // Inicializa suporte touch para mobile
+  initTouchSupport() {
+    // Inicializa eventos touch no canvas
+    this.canvasManager.initTouchEvents();
+
+    // Previne zoom do navegador em toda a página (exceto em inputs)
+    if (window.touchSupport) {
+      window.touchSupport.preventBrowserZoom();
+    }
   }
 
   bindElements() {

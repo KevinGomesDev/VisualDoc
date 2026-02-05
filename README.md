@@ -26,38 +26,45 @@
 ## 🎯 Funcionalidades
 
 ### 📌 Cards
+
 - Crie cards com título, descrição e categorias coloridas
 - Adicione **checklists** com itens detalhados em cada card
 - Redimensione cards conforme necessário
 - Categorize com cores personalizadas (Frontend, Backend, Design, etc.)
 
 ### 🔗 Conexões
+
 - Conecte cards entre si para criar fluxos e dependências
 - Conexões visuais com linhas curvas estilizadas
 - Conecte checklists específicos de um card a outro card
 
 ### 📝 Textos Livres
+
 - Adicione textos livres no canvas
 - Suporte a **Markdown** para formatação rica
 - Ideal para anotações, títulos de seção e documentação
 
 ### 📊 Colunas
+
 - Crie colunas para organizar cards (estilo Kanban)
 - Cores personalizáveis
 - Títulos editáveis
 
 ### 🎨 Interface
+
 - **Tema claro e escuro** com alternância
 - Canvas infinito com **zoom** e **pan**
 - Grid visual para alinhamento
 - Interface responsiva e moderna
 
 ### 📁 Projetos
+
 - Salve e carregue projetos em formato `.vdoc`
 - Gerenciamento completo de projetos
 - Exportação para texto/markdown
 
 ### ⌨️ Produtividade
+
 - **Ctrl+Z / Ctrl+Y** - Desfazer/Refazer
 - **Ctrl+S** - Salvar projeto
 - **Delete** - Excluir selecionado
@@ -114,6 +121,7 @@ npm run cap:open:ios
 ## 🎮 Como Usar
 
 ### Criar um Card
+
 1. **Clique direito** no canvas > "Novo Card"
 2. Ou use a barra de ferramentas
 3. Preencha título, selecione categoria
@@ -121,18 +129,22 @@ npm run cap:open:ios
 5. Clique em "Salvar"
 
 ### Conectar Cards
+
 - Arraste dos **conectores** (círculos nas bordas do card) até outro card
 - Ou clique direito > "Conectar a..." > clique no destino
 
 ### Adicionar Textos
+
 - **Clique direito** no canvas > "Novo Texto"
 - Suporta Markdown para formatação
 
 ### Criar Colunas
+
 - **Clique direito** no canvas > "Nova Coluna"
 - Arraste cards para dentro das colunas
 
 ### Navegar no Canvas
+
 - **Arrastar** com mouse para mover
 - **Ctrl + Scroll** para zoom
 - **Ctrl + 0** para resetar zoom
@@ -178,21 +190,21 @@ VisualDoc/
 
 O projeto utiliza uma **arquitetura modular** onde cada funcionalidade é encapsulada em seu próprio manager:
 
-| Manager | Responsabilidade |
-|---------|------------------|
-| `CanvasManager` | Zoom, pan, grid |
-| `CardManager` | CRUD de cards |
-| `ConnectionManager` | Conexões entre elementos |
-| `TextManager` | Textos livres |
-| `ColumnManager` | Colunas organizacionais |
-| `CategoryManager` | Categorias e cores |
-| `HistoryManager` | Undo/Redo |
-| `ProjectManager` | Salvar/Carregar projetos |
-| `ExportManager` | Exportação |
-| `SelectionManager` | Seleção de elementos |
-| `ThemeManager` | Tema claro/escuro |
-| `ModalManager` | Sistema de modais |
-| `ContextMenuManager` | Menus de contexto |
+| Manager              | Responsabilidade         |
+| -------------------- | ------------------------ |
+| `CanvasManager`      | Zoom, pan, grid          |
+| `CardManager`        | CRUD de cards            |
+| `ConnectionManager`  | Conexões entre elementos |
+| `TextManager`        | Textos livres            |
+| `ColumnManager`      | Colunas organizacionais  |
+| `CategoryManager`    | Categorias e cores       |
+| `HistoryManager`     | Undo/Redo                |
+| `ProjectManager`     | Salvar/Carregar projetos |
+| `ExportManager`      | Exportação               |
+| `SelectionManager`   | Seleção de elementos     |
+| `ThemeManager`       | Tema claro/escuro        |
+| `ModalManager`       | Sistema de modais        |
+| `ContextMenuManager` | Menus de contexto        |
 
 ---
 
@@ -237,7 +249,3 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 Desenvolvido por **Kevin Gomes**
 
 ---
-
-<p align="center">
-  <sub>Feito com ❤️ para documentação de projetos</sub>
-</p>

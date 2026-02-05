@@ -11,13 +11,13 @@ class ExportManager {
   async openTextMap() {
     // Salva antes de abrir
     await this.saveTextMap();
-    await window.electronAPI.openTXT();
+    await window.platformAPI.openTXT();
   }
 
   // Salva o mapa em TXT (chamado automaticamente junto com saveData)
   async saveTextMap() {
     const txtContent = this.generateTextMap();
-    await window.electronAPI.saveTXT(txtContent);
+    await window.platformAPI.saveTXT(txtContent);
   }
 
   // Gera o mapa completo em texto
